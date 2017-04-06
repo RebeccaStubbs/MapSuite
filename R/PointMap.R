@@ -69,6 +69,11 @@
 #'    
 #' @param sizerange default c(0,5), the range of sizes your points can be if you
 #'     use the sizevar argument.
+#'     
+#' @param sizelimits default NULL, the scale override (much like map_colors_limits).
+#'     Takes either a numeric input "c(min,max)", or the character string "each_dimension",
+#'     which will set the size limit to each dimension's min/max.
+#'     
 #' @param sizetitle Default "" no title. The legend title for your size legend.
 #' @param pointsize Default=1. If no size variable is defined, you can define
 #' a point size.
@@ -151,17 +156,20 @@
 #' @param legend_position Where you want the legend to go. Options are
 #'    "top","bottom","right","left", and "none". Default is "bottom".
 #'    
+#' @param legend_orientation Default="vertical", can also be "horizontal". Controls
+#'    whether the legends (if a sizevar is defined) stack vertically or align horizontally.
+#'    
 #' @param legend_font_size How large you want the legend font to be.
 #'    Default is NULL, which corresponds to the scaling of the base-font.
 #'    
 #' @param legend_font_face Special properties of the legend font. Options
 #'    include "plain", "bold", "italic". Default is plain.
 #'    
-#' @param legend_bar_y How fat you want the color bar that serves as the
-#'    legend to be. Default value is 0.4.
+#' @param legend_bar_width How fat you want the color bar that serves as the
+#'    legend to be. Default value is unit(.03,"snpc"), or 3 percent of the viewport
 #'    
-#' @param legend_bar_x How long you want the color bar that serves as the
-#'    legend to be. Default value is 20.
+#' @param legend_bar_length How long you want the color bar that serves as the
+#'    legend to be. Default value is unit(.75,"snpc"), or 75 percent of the viewport
 #'    
 #' @param legend_label_breaks An optional vector of the values you want to label in
 #'    your legend's color scale.
@@ -205,7 +213,8 @@ PointMap<-function(
   map_diverging_centervalue=NULL,
  
   sizevar=NULL,
-  sizerange=c(0,5),
+  sizerange=c(0,3),
+  sizelimits=NULL,
   sizetitle="",
   pointsize=1,
   pointsymbol=16, # a solid filled dot
@@ -242,11 +251,13 @@ PointMap<-function(
   
   # LEGEND AESTHETICS
   legend_title=NULL,
-  legend_position="bottom", 
+  legend_position="bottom",
+  legend_orientation="horizontal",
+  legend_stacking="horizontal",
   legend_font_size=NULL,
   legend_font_face="plain",
-  legend_bar_y=.4,
-  legend_bar_x=20,
+  legend_bar_width=unit(.03,"snpc"),
+  legend_bar_length=unit(.75,"snpc"),
   legend_label_breaks=NULL,
   legend_label_values=NULL,
   legend_patch_width=.25,
@@ -389,17 +400,45 @@ PointMap<-function(
     
     # Prepare the 'variable', check the 'data' object if provided for the 'id' variable.
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    
     if(!is.null(sizevar)){
       if(variable==sizevar){stop("Your id and size variable are the same.")}
       if(id==sizevar){stop("Your id and size variable are the same.")}
     }
     
-    
     if(is.null(data)){ # If a 'data' object has NOT been passed to the function
       data<-copy(map)
       
+     
+      if(!is.null(sizevar)){
+        # rename it in either the data or the geometry
+        if(sizevar %in% names(data)) {
+          if(!is.numeric(data[[sizevar]])) stop(paste0("You need to provide a numeric variable to the sizevar argument. You provided: ",sizevar))
+          setnames(data,sizevar,"sizevar")
+        }
+        if(sizevar %in% names(coords)){
+          if(!is.numeric(coords[[sizevar]])) stop(paste0("You need to provide a numeric variable to the sizevar argument. You provided: ",sizevar))
+          setnames(coords,sizevar,"sizevar")
+        }
+      }
+      
     } else { # If a 'data' object HAS been passed to the function...
+      
+      # If a size variable is defined...
+      #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      if(!is.null(sizevar)){
+        # Check that it doesn't exist in BOTH the data and the geometry        
+        if( (sizevar %in% names(data)) & (sizevar %in% names(coords))) stop("The variable you defined for size exists in both your coords and the additoinal data set.")
+        
+          # rename it in either the data or the geometry
+          if(sizevar %in% names(data)) {
+            if(!is.numeric(data[[sizevar]])) stop(paste0("You need to provide a numeric variable to the sizevar argument. You provided: ",sizevar))
+            setnames(data,sizevar,"sizevar")
+          }
+          if(sizevar %in% names(coords)){
+            if(!is.numeric(coords[[sizevar]])) stop(paste0("You need to provide a numeric variable to the sizevar argument. You provided: ",sizevar))
+            setnames(coords,sizevar,"sizevar")
+          }
+      }
       
       if(!(id %in% names(data))){
         stop("The id variable name you specified does not appear to exist within the 'data' object provided.")
@@ -501,8 +540,13 @@ PointMap<-function(
     # Joining on the Data
     
     # creating one long, huge object that you can subset by merging together the data and the forfified geometry
-    data<-data[, list(id=as.character(id), variable, series_dimension)] # Sub-setting the data such that only the variables that matter are kept
 
+    if(!is.null(sizevar)){
+      data<-data[, list(id=as.character(id), variable, series_dimension, sizevar)]
+    }else{
+      data<-data[, list(id=as.character(id), variable, series_dimension)]
+    }
+    
     orig_rows<-nrow(map)
     map<-merge(data, map, by="id", allow.cartesian=T)
     after_rows<-nrow(map)
@@ -547,8 +591,7 @@ PointMap<-function(
         }
       }
       
-      
-      
+
       #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       # Subsetting the Data
       subset<-copy(map[series_dimension==select_dimension]) # Sub-setting the fortified object to map out 1 layer/dimension (ex: year) of the variable of interest  
@@ -557,25 +600,38 @@ PointMap<-function(
       #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       # Creating the Base Map Plot in GGPlot2
       
+      
+      if(!is.null(sizevar)){
+        if (!is.null(sizelimits)){
+          if(is.numeric(sizelimits)){
+            sizeminimum<-sizelimits[1]
+            sizemaximum<-sizelimits[2]
+          }else{
+            if(sizelimits=="each_dimension"){
+              sizemaximum<-max(subset[["sizevar"]])
+              sizeminimum<-min(subset[["sizevar"]])
+            }else{stop("Any character input other than 'each_dimension', which will produce a size scaling from the min/max of each dimension, is not recognized.")}
+          }
+        }else{ #Otherwise, set the min/max of the scale to the min/max of ALL dimensions of the variable.
+          sizemaximum<-max(data[["sizevar"]])
+          sizeminimum<-min(data[["sizevar"]])
+        }
+      }
+
       if(!is.null(sizevar)){
         map_plot<-ggplot() + geom_point(data=subset,aes(x=lon, y=lat, color=variable,size=sizevar),alpha=map_transparency)+
-          scale_size_continuous(name=sizetitle,range = sizerange, limits=c(sizeminimum,sizemaximum))+
-          scale_x_continuous("", breaks=NULL) + 
-          scale_y_continuous("", breaks=NULL) + 
-          coord_fixed(ratio=1)+
-          theme_tufte(base_size = font_size, base_family = font_family)
+          scale_size_continuous(name=sizetitle,range = sizerange, limits=c(sizeminimum,sizemaximum))
       }
-      
       
       if(is.null(sizevar)){
-        map_plot<-ggplot() + geom_point(data=subset,aes(x=lon, y=lat, color=variable),size=pointsize, alpha=map_transparency)+
-          scale_x_continuous("", breaks=NULL) + 
-          scale_y_continuous("", breaks=NULL) + 
-          coord_fixed(ratio=1)+
-          theme_tufte(base_size = font_size, base_family = font_family)
+        map_plot<-ggplot() + geom_point(data=subset,aes(x=lon, y=lat, color=variable),size=pointsize)
       }
       
-          
+      map_plot<-map_plot+
+        scale_x_continuous("", breaks=NULL) + 
+        scale_y_continuous("", breaks=NULL) + 
+        coord_fixed(ratio=1)+
+        theme_tufte(base_size = font_size, base_family = font_family)
       
       if(include_titles==T){
         map_plot<-map_plot+
@@ -590,7 +646,6 @@ PointMap<-function(
       #####################
       
       if(discrete_scale==F){ # If the data is numeric... 
-        
         # DEFINING COLOR RAMP AESTHETICS
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         
@@ -626,7 +681,7 @@ PointMap<-function(
           }
         }
         
-        
+
         
         
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -647,15 +702,31 @@ PointMap<-function(
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         # Adding a legend
         
+        if(legend_orientation=="horizontal"){
+          legend_bar_x<-legend_bar_length
+          legend_bar_y<-legend_bar_width
+        }
+        if(legend_orientation=="vertical"){
+          legend_bar_x<-legend_bar_width
+          legend_bar_y<-legend_bar_length
+        }
+
         if (legend_position %in% c("none")){
           map_plot<-map_plot+theme(legend.position="none")
         } else {
-          map_plot<-map_plot+
-            guides(color=guide_colourbar(title=legend_title, title.position="top", barheight=legend_bar_y, barwidth=legend_bar_x, label=TRUE, ticks=FALSE )) + 
-            theme(legend.position=legend_position,legend.title=element_text(size=legend_font_size))
+          if(!is.null(sizevar)){
+            map_plot<-map_plot+
+              guides(color=guide_colourbar(title=legend_title, title.position="top", barheight=legend_bar_y, barwidth=legend_bar_x, label=TRUE, ticks=FALSE ,direction=legend_orientation))+
+              guides(size=guide_legend(title=sizetitle,title.position="top",direction=legend_orientation)) + 
+              theme(legend.position=legend_position,legend.title=element_text(size=legend_font_size))+
+              theme(legend.box = legend_stacking)
+            }else{
+            map_plot<-map_plot+
+              guides(color=guide_colourbar(title=legend_title, title.position="top", barheight=legend_bar_y, barwidth=legend_bar_x, label=TRUE, ticks=FALSE ,direction=legend_orientation)) + 
+              theme(legend.position=legend_position,legend.title=element_text(size=legend_font_size))
+            }
         }
-        
-        
+
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         # Making a histogram of the distribution of that dimension's values
         
@@ -695,7 +766,8 @@ PointMap<-function(
           guides(color=guide_legend(title=legend_title,
                                    keywidth=legend_patch_width,
                                    keyheight=legend_patch_height,
-                                   label.position = legend_patch_label_position))+
+                                   label.position = legend_patch_label_position,
+                                   direction=legend_orientation))+
           theme(legend.position=legend_position)
         
         

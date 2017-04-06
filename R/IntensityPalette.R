@@ -1,9 +1,7 @@
-#' Histogram of data using color scheme
+#' Cubehelix Color Pallette with Increasing Intensity
 #'
-#' @description This histogram function creates and returns a ggplot object with
-#' a color scale dependent on the X value (default as all colors being grey)
-#' as well as the possibility for vertical lines that describe different
-#' properties of the distribution (mean, median, etc) added on top of the graph.
+#' @description This function returns a cubehelix color pallette 
+#' that increases in intensity as it moves from light to dark.
 #'
 #' @param start numeric start-point for cubehelix color ramp
 #' @param r number of rotations through cubehelix color ramp

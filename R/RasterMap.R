@@ -145,11 +145,11 @@
 #' @param legend_font_face Special properties of the legend font. Options
 #'    include "plain", "bold", "italic". Default is plain.
 #'    
-#' @param legend_bar_y How fat you want the color bar that serves as the
-#'    legend to be. Default value is 0.4.
+#' @param legend_bar_width How fat you want the color bar that serves as the
+#'    legend to be. Default value is unit(.03,"snpc"), or 3 percent of the viewport
 #'    
-#' @param legend_bar_x How long you want the color bar that serves as the
-#'    legend to be. Default value is 20.
+#' @param legend_bar_legnth How long you want the color bar that serves as the
+#'    legend to be. Default value is unit(.75,"snpc"), or 75 percent of the viewport
 #'    
 #' @param legend_label_breaks An optional vector of the values you want to label in
 #'    your legend's color scale.
@@ -224,11 +224,12 @@ RasterMap<-function(
   
   # LEGEND AESTHETICS
   legend_title=NULL,
-  legend_position="bottom", 
+  legend_position="bottom",
+  legend_orientation="horizontal",
   legend_font_size=NULL,
   legend_font_face="plain",
-  legend_bar_y=.4,
-  legend_bar_x=20,
+  legend_bar_width=unit(.03,"snpc"),
+  legend_bar_length=unit(.75,"snpc"),
   legend_label_breaks=NULL,
   legend_label_values=NULL,
   legend_patch_width=.25,
@@ -599,14 +600,14 @@ RasterMap<-function(
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         # Adding the color ramp!
         if(!is.null(legend_label_breaks)&!is.null(legend_label_values)){
-          map_plot<-map_plot+scale_color_gradientn(colours=map_colors, 
+          map_plot<-map_plot+scale_fill_gradientn(colours=map_colors, 
                                                    limits=c(minimum, maximum),
                                                    values=map_colors_breaks, 
                                                    breaks=legend_label_breaks, 
                                                    labels=legend_label_values,
                                                    na.value=map_NAcolor)
         } else {
-          map_plot<-map_plot+scale_color_gradientn(colours=map_colors, 
+          map_plot<-map_plot+scale_fill_gradientn(colours=map_colors, 
                                                    limits=c(minimum, maximum), 
                                                    values=map_colors_breaks) 
         }
@@ -614,12 +615,21 @@ RasterMap<-function(
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         # Adding a legend
         
+        if(legend_orientation=="horizontal"){
+          legend_bar_x<-legend_bar_length
+          legend_bar_y<-legend_bar_width
+        }
+        if(legend_orientation=="vertical"){
+          legend_bar_x<-legend_bar_width
+          legend_bar_y<-legend_bar_length
+        }
+        
         if (legend_position %in% c("none")){
           map_plot<-map_plot+theme(legend.position="none")
         } else {
-          map_plot<-map_plot+
-            guides(color=guide_colourbar(title=legend_title, title.position="top", barheight=legend_bar_y, barwidth=legend_bar_x, label=TRUE, ticks=FALSE )) + 
-            theme(legend.position=legend_position,legend.title=element_text(size=legend_font_size))
+            map_plot<-map_plot+
+              guides(fill=guide_colourbar(title=legend_title, title.position="top", barheight=legend_bar_y, barwidth=legend_bar_x, label=TRUE, ticks=FALSE ,direction=legend_orientation)) + 
+              theme(legend.position=legend_position,legend.title=element_text(size=legend_font_size))
         }
         
         
@@ -662,9 +672,9 @@ RasterMap<-function(
           guides(fill=guide_legend(title=legend_title,
                                    keywidth=legend_patch_width,
                                    keyheight=legend_patch_height,
-                                   label.position = legend_patch_label_position))+
+                                   label.position = legend_patch_label_position,
+                                   direction=legend_orientation))+
           theme(legend.position=legend_position)
-        
         
         
         # Adding a "histogram" (really, in this case, a bar chart) to the bottom of the image: 

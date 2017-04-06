@@ -26,20 +26,21 @@ HistogramColorstats<-function(datavector,
                                color_value_breaks=NULL,
                                dist_stats=NULL,
                                mean_color="red",
-                               quantile_color="black"){
+                               quantile_color="black",
+                               title=""){
 
     # Defining data/column based variables:
-    if(is.null(minimum)){minumum<-min(datavector)}
-    if(is.null(maximum)){maximum<-max(datavector)}
+    if(is.null(minimum)){Min<-min(datavector)}else{Min<-minimum}
+    if(is.null(maximum)){Max<-max(datavector)}else{Max<-maximum}
 
     # Creating the basic histogram; this will be returned if dist_stats==NULL
     hist<-ggplot() +
         geom_histogram(aes(x=datavector, fill = ..x..), bins=30, na.rm = TRUE)+
-        xlim(minimum, maximum)+
-        scale_fill_gradientn(colours=rev(color_ramp), limits=c(minimum, maximum), values=color_value_breaks)+
+        xlim(Min, Max) +
+        scale_fill_gradientn(colours=color_ramp, limits=c(minimum, maximum), values=color_value_breaks)+
         theme_tufte()+
         guides(fill=guide_colourbar(title=" ", barheight=0, barwidth=0, label=FALSE, ticks=FALSE))+
-        labs(title="",x= "",y="")+
+        labs(title=title,x= "",y="")+
         theme(axis.title.y=element_blank(),axis.text.y=element_blank(),axis.ticks=element_blank())
 
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

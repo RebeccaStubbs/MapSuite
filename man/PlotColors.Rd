@@ -4,7 +4,8 @@
 \alias{PlotColors}
 \title{Plot colors of a color pallette}
 \usage{
-PlotColors(color_list, color_list_name = NULL, n = NULL)
+PlotColors(color_list, color_list_name = NULL, n = NULL, base_size = 11,
+  listcolors = F, labelcolors = T)
 }
 \arguments{
 \item{color_list}{list or vector of valid R colors}

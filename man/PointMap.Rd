@@ -8,20 +8,23 @@ PointMap(coords, id, xcol, ycol, variable = NULL, data = NULL,
   verbose = F, map_colors = wpal("earth"), map_NAcolor = "grey",
   map_transparency = 1, map_colors_limits = NULL,
   map_colors_breaks = NULL, map_diverging_centervalue = NULL,
-  sizevar = NULL, sizerange = c(0, 5), sizetitle = "", pointsize = 1,
-  pointsymbol = 16, return_objects = FALSE, pdf_path = NULL,
-  include_titles = NULL, histogram = FALSE, histogram_fill_color = NULL,
-  histogram_stats = NULL, histogram_stats_mean_color = "red",
+  sizevar = NULL, sizerange = c(0, 3), sizelimits = NULL,
+  sizetitle = "", pointsize = 1, pointsymbol = 16,
+  return_objects = FALSE, pdf_path = NULL, include_titles = NULL,
+  histogram = FALSE, histogram_fill_color = NULL, histogram_stats = NULL,
+  histogram_stats_mean_color = "red",
   histogram_stats_quantile_color = "black", outline = NULL,
   outline_size = 0.1, outline_color = "white", font_family = "serif",
   font_size = 12, map_title = NULL, map_subtitle = NULL,
   map_title_justification = 0.5, map_title_font_size = NULL,
   map_title_font_face = "plain", series_dimension = NULL,
   series_sequence = NULL, legend_title = NULL, legend_position = "bottom",
-  legend_font_size = NULL, legend_font_face = "plain", legend_bar_y = 0.4,
-  legend_bar_x = 20, legend_label_breaks = NULL,
-  legend_label_values = NULL, legend_patch_width = 0.25,
-  legend_patch_height = 0.25, legend_patch_label_position = "right")
+  legend_orientation = "horizontal", legend_stacking = "horizontal",
+  legend_font_size = NULL, legend_font_face = "plain",
+  legend_bar_width = unit(0.03, "snpc"), legend_bar_length = unit(0.75,
+  "snpc"), legend_label_breaks = NULL, legend_label_values = NULL,
+  legend_patch_width = 0.25, legend_patch_height = 0.25,
+  legend_patch_label_position = "right")
 }
 \arguments{
 \item{coords}{A data table with an x and a y column with coordinates in the desired
@@ -78,6 +81,10 @@ which will lead to all points being the same size.}
 
 \item{sizerange}{default c(0,5), the range of sizes your points can be if you
 use the sizevar argument.}
+
+\item{sizelimits}{default NULL, the scale override (much like map_colors_limits).
+Takes either a numeric input "c(min,max)", or the character string "each_dimension",
+which will set the size limit to each dimension's min/max.}
 
 \item{sizetitle}{Default "" no title. The legend title for your size legend.}
 
@@ -166,17 +173,20 @@ speficy actually exist within your series_dimension.}
 \item{legend_position}{Where you want the legend to go. Options are
 "top","bottom","right","left", and "none". Default is "bottom".}
 
+\item{legend_orientation}{Default="vertical", can also be "horizontal". Controls
+whether the legends (if a sizevar is defined) stack vertically or align horizontally.}
+
 \item{legend_font_size}{How large you want the legend font to be.
 Default is NULL, which corresponds to the scaling of the base-font.}
 
 \item{legend_font_face}{Special properties of the legend font. Options
 include "plain", "bold", "italic". Default is plain.}
 
-\item{legend_bar_y}{How fat you want the color bar that serves as the
-legend to be. Default value is 0.4.}
+\item{legend_bar_width}{How fat you want the color bar that serves as the
+legend to be. Default value is unit(.03,"snpc"), or 3 percent of the viewport}
 
-\item{legend_bar_x}{How long you want the color bar that serves as the
-legend to be. Default value is 20.}
+\item{legend_bar_length}{How long you want the color bar that serves as the
+legend to be. Default value is unit(.75,"snpc"), or 75 percent of the viewport}
 
 \item{legend_label_breaks}{An optional vector of the values you want to label in
 your legend's color scale.}

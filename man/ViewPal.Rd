@@ -4,7 +4,8 @@
 \alias{ViewPal}
 \title{View a Woodson Pallette color scheme.}
 \usage{
-ViewPal(color = NULL)
+ViewPal(color = NULL, n = NULL, base_size = 11, listcolors = F,
+  n_per_page = 5, labelcolors = T)
 }
 \arguments{
 \item{color}{the name of the color scheme}

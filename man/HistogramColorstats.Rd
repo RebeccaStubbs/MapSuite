@@ -6,7 +6,7 @@
 \usage{
 HistogramColorstats(datavector, color_ramp = "grey17", minimum = NULL,
   maximum = NULL, color_value_breaks = NULL, dist_stats = NULL,
-  mean_color = "red", quantile_color = "black")
+  mean_color = "red", quantile_color = "black", title = "")
 }
 \arguments{
 \item{datavector}{vector of color data}

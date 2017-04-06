@@ -2,7 +2,7 @@
 % Please edit documentation in R/IntensityPalette.R
 \name{IntensityPalette}
 \alias{IntensityPalette}
-\title{Histogram of data using color scheme}
+\title{Cubehelix Color Pallette with Increasing Intensity}
 \usage{
 IntensityPalette(start, r, gamma, hue_list = c(0.5, 1, 3))
 }
@@ -23,10 +23,8 @@ IntensityPalette(start, r, gamma, hue_list = c(0.5, 1, 3))
 an adapted cubehelix color pallette, increasing in intensity.
 }
 \description{
-This histogram function creates and returns a ggplot object with
-a color scale dependent on the X value (default as all colors being grey)
-as well as the possibility for vertical lines that describe different
-properties of the distribution (mean, median, etc) added on top of the graph.
+This function returns a cubehelix color pallette 
+that increases in intensity as it moves from light to dark.
 }
 \examples{
 IntensityPalette(start=0.5,r=.5,gamma=1)

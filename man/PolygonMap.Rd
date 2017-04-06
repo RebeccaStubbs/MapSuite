@@ -17,8 +17,9 @@ PolygonMap(map, id, variable = NULL, data = NULL, verbose = F,
   map_title_justification = 0.5, map_title_font_size = NULL,
   map_title_font_face = "plain", series_dimension = NULL,
   series_sequence = NULL, legend_title = NULL, legend_position = "bottom",
-  legend_font_size = NULL, legend_font_face = "plain", legend_bar_y = 0.4,
-  legend_bar_x = 20, legend_label_breaks = NULL,
+  legend_font_size = NULL, legend_font_face = "plain",
+  legend_orientation = "horizontal", legend_bar_width = unit(0.03, "snpc"),
+  legend_bar_length = unit(0.75, "snpc"), legend_label_breaks = NULL,
   legend_label_values = NULL, legend_patch_width = 0.25,
   legend_patch_height = 0.25, legend_patch_label_position = "right")
 }
@@ -164,12 +165,6 @@ Default is NULL, which corresponds to the scaling of the base-font.}
 \item{legend_font_face}{Special properties of the legend font. Options
 include "plain", "bold", "italic". Default is plain.}
 
-\item{legend_bar_y}{How fat you want the color bar that serves as the
-legend to be. Default value is 0.4.}
-
-\item{legend_bar_x}{How long you want the color bar that serves as the
-legend to be. Default value is 20.}
-
 \item{legend_label_breaks}{An optional vector of the values you want to label in
 your legend's color scale.}
 
@@ -177,14 +172,20 @@ your legend's color scale.}
 use to label your legend's color scale (must be same length as
 legend_label_breaks)}
 
-\item{legend_patch_width}{width of color swatches in legend when categorical data
-is used. Default is .25.}
+\item{legend_patch_width}{How fat you want the color bar that serves as the
+legend to be. Default value is unit(.03,"snpc"), or 3 percent of the viewport}
 
 \item{legend_patch_height}{height of color swatches in legend when categorical data
 is used. Default is .25.}
 
 \item{legend_patch_label_position}{Position of category labels in legend when categorical
 data is used. Default= "right".}
+
+\item{legend_patch_length}{How long you want the color bar that serves as the
+legend to be. Default value is unit(.75,"snpc"), or 75 percent of the viewport}
+
+\item{legend_patch_width}{width of color swatches in legend when categorical data
+is used. Default is .25.}
 }
 \value{
 ggplot object or None (plots written to pdf)
