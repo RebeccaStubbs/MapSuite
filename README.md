@@ -6,7 +6,7 @@
 ggplot2 when you have a spatial polygons object and associated data.
 A suite of color palletes are built into the package which over a smooth
 way of showing small changes in value. To install simply run
-`devtools::install_github("RebeccaStubbs/woodson")`. A demo of the 
+`devtools::install_github("RebeccaStubbs/MapSuite")`. A demo of the 
 package can be found here 
 [here](https://rpubs.com/BeccaStubbs/introduction_to_woodson_mapping_suite).  
 

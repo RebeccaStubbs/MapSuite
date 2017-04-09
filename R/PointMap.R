@@ -324,7 +324,7 @@ PointMap<-function(
     # if you aren't returning the map objects
     if(include_titles==T){
       map_plot<-map_plot+
-        labs(title = map_title, subtitle=main_map_subtitle) +
+        labs(title = map_title, subtitle=map_subtitle) +
         theme(plot.title = element_text(size = map_title_font_size, face=map_title_font_face, hjust = map_title_justification),
               plot.subtitle=element_text(hjust = map_title_justification),
               legend.text = element_text(size = legend_font_size, face=legend_font_face))
@@ -404,39 +404,38 @@ PointMap<-function(
       if(variable==sizevar){stop("Your id and size variable are the same.")}
       if(id==sizevar){stop("Your id and size variable are the same.")}
     }
-    
+
     if(is.null(data)){ # If a 'data' object has NOT been passed to the function
       data<-copy(map)
       
-     
       if(!is.null(sizevar)){
         # rename it in either the data or the geometry
         if(sizevar %in% names(data)) {
           if(!is.numeric(data[[sizevar]])) stop(paste0("You need to provide a numeric variable to the sizevar argument. You provided: ",sizevar))
           setnames(data,sizevar,"sizevar")
         }
-        if(sizevar %in% names(coords)){
-          if(!is.numeric(coords[[sizevar]])) stop(paste0("You need to provide a numeric variable to the sizevar argument. You provided: ",sizevar))
-          setnames(coords,sizevar,"sizevar")
+        if(sizevar %in% names(map)){
+          if(!is.numeric(map[[sizevar]])) stop(paste0("You need to provide a numeric variable to the sizevar argument. You provided: ",sizevar))
+          setnames(map,sizevar,"sizevar")
         }
       }
       
     } else { # If a 'data' object HAS been passed to the function...
-      
-      # If a size variable is defined...
+
+            # If a size variable is defined...
       #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       if(!is.null(sizevar)){
         # Check that it doesn't exist in BOTH the data and the geometry        
-        if( (sizevar %in% names(data)) & (sizevar %in% names(coords))) stop("The variable you defined for size exists in both your coords and the additoinal data set.")
+        if( (sizevar %in% names(data)) & (sizevar %in% names(map))) stop("The variable you defined for size exists in both your coords and the additoinal data set.")
         
           # rename it in either the data or the geometry
           if(sizevar %in% names(data)) {
             if(!is.numeric(data[[sizevar]])) stop(paste0("You need to provide a numeric variable to the sizevar argument. You provided: ",sizevar))
             setnames(data,sizevar,"sizevar")
           }
-          if(sizevar %in% names(coords)){
-            if(!is.numeric(coords[[sizevar]])) stop(paste0("You need to provide a numeric variable to the sizevar argument. You provided: ",sizevar))
-            setnames(coords,sizevar,"sizevar")
+          if(sizevar %in% names(map)){
+            if(!is.numeric(map[[sizevar]])) stop(paste0("You need to provide a numeric variable to the sizevar argument. You provided: ",sizevar))
+            setnames(map,sizevar,"sizevar")
           }
       }
       
@@ -463,6 +462,7 @@ PointMap<-function(
       setnames(data,id,"id")
     } # Closing "if external data is NOT provided" clause.
     
+    map<-map[,list(lat,lon,id)]
     # Changing the name of the variable to "variable" 
     setnames(data,variable,"variable")
     
@@ -617,12 +617,12 @@ PointMap<-function(
           sizeminimum<-min(data[["sizevar"]])
         }
       }
-
+      
       if(!is.null(sizevar)){
         map_plot<-ggplot() + geom_point(data=subset,aes(x=lon, y=lat, color=variable,size=sizevar),alpha=map_transparency)+
           scale_size_continuous(name=sizetitle,range = sizerange, limits=c(sizeminimum,sizemaximum))
       }
-      
+
       if(is.null(sizevar)){
         map_plot<-ggplot() + geom_point(data=subset,aes(x=lon, y=lat, color=variable),size=pointsize)
       }
