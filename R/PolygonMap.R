@@ -281,9 +281,9 @@ PolygonMap<-function(
     }
     
     # Renaming the id variable to "id".
-    setnames(map@data,id,"id")
+    #setnames(map@data,id,"id")
     
-    map <-data.table(suppressWarnings(fortify(map, region="id"))) ; setnames(map,"id","id")
+    map <-data.table(suppressWarnings(fortify(map, region=id))) #; setnames(map,"id","id")
     
     
     if(is.null(map_outline_color)){
@@ -374,7 +374,7 @@ PolygonMap<-function(
     }
 
   # Renaming the id variable to "id".
-    setnames(map@data,id,"id")
+    #setnames(map@data,id,"id")
     
 # Prepare the 'variable', check the 'data' object if provided for the 'id' variable.
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -415,7 +415,7 @@ PolygonMap<-function(
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
 # Fortifying the data object.
-  map <-data.table(suppressWarnings(fortify(map, region="id"))) ; setnames(map,"id","id")
+  map <-data.table(suppressWarnings(fortify(map, region=id)))
     
   if (!is.null(outline)) {
       if (!class(outline) %in% c("SpatialPolygonsDataFrame","SpatialPolygons")){
@@ -488,6 +488,7 @@ if(!is.null(legend_label_breaks)){
   
   # creating one long, huge object that you can subset by merging together the data and the forfified geometry
   data<-data[, list(id=as.character(id), variable, series_dimension)] # Sub-setting the data such that only the variables that matter are kept
+  map[,id:=as.character(id)] # setting it as a charecter, to make sure the merge works.
   
   orig_rows<-nrow(map)
   map<-merge(data, map, by="id", allow.cartesian=T)
