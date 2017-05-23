@@ -380,8 +380,13 @@ PolygonMap<-function(
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   if(is.null(data)){ # If a 'data' object has NOT been passed to the function
+    if(verbose){print("Data object not provided, copying the data attributes of the map object")}
     data<-copy(map@data)
     
+    if(! variable %in% names(data)){
+      stop ("The variable you have specified is not in the map object's attributes.")
+    }  
+
   } else { # If a 'data' object HAS been passed to the function...
   
     if(!(id %in% names(data))){
@@ -403,10 +408,15 @@ PolygonMap<-function(
       }
     }
     
-    # Changing the name of the 'id' variable to "id"
-    setnames(data,id,"id")
   } # Closing "if external data is NOT provided" clause.
 
+    # Changing the name of the 'id' variable to "id"
+    if("id" %in% names(data)){
+      setnames(data,"id","orig_id")
+    }
+    
+    setnames(data,id,"id")
+    
   # Changing the name of the variable to "variable" 
     setnames(data,variable,"variable")
 
