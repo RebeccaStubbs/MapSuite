@@ -157,13 +157,6 @@ What if the variable you wish to plot is not already in same data object as the 
 
 An under-appreciated quirk of the SpatialPolygonsDataFrame data type is that the geometry slot (@polygons) is related to the attributes (@data) by a shared ordering, where the first item in the @polygons slot has the attributes of the first item in the @data slot. If an R user wishes to map a variable not yet in the @data slot, the temptation is to use the merge() function to join the two data sets and carry on with plotting your spatial data. However, this approach is dangerous- unbeknownst to many, the merge() function re-orders the resulting data frame by the ID fields used to join the two data sets. This can lead to maps that look plausible (there are data values and attributes for each polygon), but the ordering of the @data slot no longer matches with the @polygons, leading to a map where attributes are mismatched with their geometries.
 
-<!-- Scrambled Polygons Figure -->
-\begin{minipage}{\linewidth}
-\begin{center}
-\includegraphics[width=\linewidth]{scrambled_poly}
-\captionof{figure}{An example of how attributes can become dissasociated with their geometries based on a merge.}
-\end{center}
-\end{minipage}
 <img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
 
 To prevent this, the MapPolygons, MapPoints, and MapRaster functions take external data sets as parameters, which can be joined onto the spatial data using a specified field present in both the spatial and tabular data. The merging of the external data and the spatial objects within the PolygonMap function are ensured to preserve the polygon-to-attribute relationships. The polygon object is "fortified" (converted from a SpatialPolygonsDataFrame object into a data.frame with coordinate locations for plotting) within the function, and the additional data set is merged on. This syntax makes it easy to switch between different variables that exist in an external data set.
@@ -263,7 +256,7 @@ HistogramColorstats(datavector=county_simulated[["var2"]], color_ramp=wpal("seag
 This functionality is integrated into the main mapping functions with the use of a 'histogram' parameter. When set to TRUE, the histogram will be placed at the bottom of the map, with the same limits and scaling as the map. To modify the histogram or its position, users can generate the histogram separately, using the function histogram\_colorstats(), and modify the placements and formatting of the histogram as desired.
 
 ``` r
-RasterMap(coords=county_pixels[state_name=="Colorado"], id="cnty", xcol="x_albers", ycol="y_albers",
+RasterMap(coords=county_pixels[state_name=="Washington"], id="cnty", xcol="x_albers", ycol="y_albers",
           data=county_simulated, variable="var3", map_colors=wpal("seaglass"),
           legend_position="left", legend_orientation="vertical", font_size=8,
           map_title="Simulated Data Distribution", legend_bar_length=unit(.5,"snpc"),
