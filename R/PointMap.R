@@ -324,7 +324,7 @@ PointMap<-function(
     # if you aren't returning the map objects
     if(include_titles==T){
       map_plot<-map_plot+
-        labs(title = map_title, subtitle=map_subtitle) +
+        labs(title = map_title, subtitle=main_map_subtitle) +
         theme(plot.title = element_text(size = map_title_font_size, face=map_title_font_face, hjust = map_title_justification),
               plot.subtitle=element_text(hjust = map_title_justification),
               legend.text = element_text(size = legend_font_size, face=legend_font_face))
@@ -635,7 +635,7 @@ PointMap<-function(
       
       if(include_titles==T){
         map_plot<-map_plot+
-          labs(title = map_title, subtitle=map_subtitle) +
+          labs(title = map_title, subtitle=main_map_subtitle) +
           theme(plot.title = element_text(size = map_title_font_size, face=map_title_font_face, hjust = map_title_justification),
                 plot.subtitle=element_text(hjust = map_title_justification),
                 legend.text = element_text(size = legend_font_size, face=legend_font_face))
