@@ -293,6 +293,8 @@ PolygonMap<-function(
       map_outline_size<-.5
     }
     
+    main_map_subtitle<-map_subtitle
+    
     map_plot<-ggplot(map) + 
       geom_polygon(aes(x=long, y=lat, group=group), color=map_outline_color, size=map_outline_size, fill=map_colors, alpha=map_transparency) +
       scale_x_continuous("", breaks=NULL) + 

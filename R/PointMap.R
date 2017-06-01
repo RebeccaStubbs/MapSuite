@@ -320,6 +320,7 @@ PointMap<-function(
       coord_fixed(ratio=1)+
       theme_tufte(base_size = font_size, base_family = font_family)
 
+    main_map_subtitle<-map_subtitle
     
     # if you aren't returning the map objects
     if(include_titles==T){

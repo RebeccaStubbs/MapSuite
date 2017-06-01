@@ -9,6 +9,7 @@ library(roxygen2)
   update_documentation<-T
   install_package<-T
   load_package<-T
+  install_github<-T
 
 # Create/initialize package
   if(create){
@@ -35,3 +36,8 @@ library(roxygen2)
   if(load_package){
   library(MapSuite)
   }
+  
+  if(install_github){
+    devtools::install_github("RebeccaStubbs/MapSuite")
+  }
+  
