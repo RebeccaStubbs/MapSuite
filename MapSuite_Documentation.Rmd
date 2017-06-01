@@ -4,6 +4,9 @@ author: "Rebecca Stubbs"
 output:
   md_document:
     variant: markdown_github
+  github_document:
+    toc: true
+    toc_depth: 2
 classoption: landscape
 ---
 
@@ -46,12 +49,11 @@ county_polygons@data<-copy(data.table(county_polygons@data))
 
 ## Introduction
 
-The ability for scientists, students, and citizens to easily visualize and analyze spatial data is more crucial than ever. As the amount of freely available geo-referenced data continues to grow, an ever-increasing community is discovering and utilizing spatial information\[1\]. A host of commercial and open source software with point-and-click interfaces exist for spatial analysis and visualization-- from ESRI's software suite to QGIS, Google Maps and other online options[2]. For those who wish to move beyond the graphical user interface, open-source languages such as R and Python are no longer restricted to those with academic or computer science backgrounds. Massive online open courses, an extensive blogging community, and online forums such as StackExchange provide instruction and trouble-shooting help from any corner of the world. The barriers to a truly participatory geographic information science (GIS) community are being lowered. This explosion of free resources empowers citizen scientists, grassroots organizations, and institutions in low-resource settings to take advantage of the ever-growing library of open-source toolkits for data science. R, as an open-source programming language used extensively for data analysis and statistics, has a variety of tools designed for spatial analysis and visualization[3][4].
+The ability for scientists, students, and citizens to easily visualize and analyze spatial data is more crucial than ever. As the amount of freely available geo-referenced data continues to grow, an ever-increasing community is discovering and utilizing spatial information[1]. A host of commercial and open source software with point-and-click interfaces exist for spatial analysis and visualization-- from ESRI's software suite to QGIS, Google Maps and other online options[2]. For those who wish to move beyond the graphical user interface, open-source languages such as R and Python are no longer restricted to those with academic or computer science backgrounds. Massive online open courses, an extensive blogging community, and online forums such as StackExchange provide instruction and trouble-shooting help from any corner of the world. The barriers to a truly participatory geographic information science (GIS) community are being lowered. This explosion of free resources empowers citizen scientists, grassroots organizations, and institutions in low-resource settings to take advantage of the ever-growing library of open-source toolkits for data science. R, as an open-source programming language used extensively for data analysis and statistics, has a variety of tools designed for spatial analysis and visualization[3][4].
 
 Working with spatial data is not, however, straightforward. Full of idiosyncrasies such as varying data types, projections, and the threat of invalid geometries, there is an additional overhead to working with spatial data. This poses a challenge: how can users with less experience in programming and GIS be brought into the fold? The ability to present and visualize findings from any analysis is critical, and map-making has been shown to be a key tool. Empowered communities have the ability to present maps to decision makers, leading to policy changes[5]. 
 
-The **MapSuite** package joins a community of prior work on mapping in R. In addition to the **sp** package[4], which contains both spatial data types and simple plotting functions, a variety of packages focus on spatial data visualization. Finely-customized graphics of many kinds are possible using **ggplot2**[6], which offers a number of data-driven plotting functions. Mapping-specific packages, such as **ggmap**
-[7], **ggspatial**[8], **rCarto** [9], and **choroplethR** [10], each present ways for R users to visualize spatial data. However, none of the currently existing packages emphasize (i) the ability to map quickly and easily over time or subgroup, or (ii)  the ability to layer complex maps to create a more sophisticated cartographic output. The growing popularity of interactive tools, such as **Leaflet**[11] and **Shiny**[12], have changed the landscape of what it means to visualize multi-dimensional data. However, generating images and PDFs of results is still a key way to share and present results. 
+The **MapSuite** package joins a community of prior work on mapping in R. In addition to the **sp** package[4], which contains both spatial data types and simple plotting functions, a variety of packages focus on spatial data visualization. Finely-customized graphics of many kinds are possible using **ggplot2**[6], which offers a number of data-driven plotting functions. Mapping-specific packages, such as **ggmap**[7] , **ggspatial**[8] , **rCarto**[9] , and **choroplethR**[10], each present ways for R users to visualize spatial data. However, none of the currently existing packages emphasize (i) the ability to map quickly and easily over time or subgroup, or (ii)  the ability to layer complex maps to create a more sophisticated cartographic output. The growing popularity of interactive tools, such as **Leaflet** [11] and **Shiny**[12] , have changed the landscape of what it means to visualize multi-dimensional data. However, generating images and PDFs of results is still a key way to share and present results. 
 
 Many of the static graphics packages, such as **ggplot** and **ggmap**, utilize a paradigm established in R by Hadley Wickham called the "grammar of graphics"[13]. Within the "grammar of graphics," a plot is built in layers, where the data forms the foundation of the plot, and different geometric outputs (points, paths/lines, and polygons) can be layered and manipulated to generate a diagram. This approach to code has many advantages-- the syntax is highly flexible and well-suited to the kinds of data used by and produced from statistical analyses. There is also extensive documentation on how to use **ggplot2**, and how to achieve a variety of effects using this flexible package.
 
@@ -160,10 +162,15 @@ PolygonMap(map=wa_polygons, id="cnty", map_colors = "lightblue",
 Mapping a variable within the data attributes of the spatial object (within the data.frame that serves as the coordinates for the Point and Raster functions or within the @data slot of the SpatialPolygonsDataFrame in the PolygonMap function) is possible by adding a "variable" parameter. This variable can either be numeric or categorical in nature. 
 
 ```{r, results='hide', eval=F}
-PolygonMap(map=county_polygons, id="cnty", variable="elevation", map_title="Mean Elevation")
+PolygonMap(map=county_polygons, 
+           id="cnty", variable="elevation", 
+           map_title="Mean Elevation")
+
 county_polygons@data[,above_below:=ifelse(county_polygons@data[["elevation"]]>1000,
                                           "<1,000 ft",">1,000 ft")]
-PolygonMap(map=county_polygons, id="cnty", variable="above_below", legend_title = "Mean Elevation")
+PolygonMap(map=county_polygons, 
+           id="cnty", variable="above_below", 
+           legend_title = "Mean Elevation")
 ```
 ```{r, echo=F, results='hide', eval=T}
 county_polygons@data[,above_below:=ifelse(county_polygons@data[["elevation"]]>1000, "<1,000 ft",">1,000 ft")]
@@ -518,47 +525,47 @@ A number of packages exist to visualize spatial data in R. The MapSuite package 
 
 \[1\]: R. Sieber. Public participation geographic information systems: A literature review and framework. Annals of the Association of American Geographers, 96(3):491-507, 2006. doi: 10.1111/j.1467-8306.2006. 00702.x.
 
-[2]: S. Steiniger and E. Bocher. An overview on current free and open source desktop gis developments.International Journal of Geographical Information Science, 23(10):1345-1370, 2009. doi: 10.1080/13658810802634956.
+\[2\]: S. Steiniger and E. Bocher. An overview on current free and open source desktop gis developments.International Journal of Geographical Information Science, 23(10):1345-1370, 2009. doi: 10.1080/13658810802634956.
 
-[3]: R Core Team. R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria, 2012. URL <http://www.R-project.org/>. ISBN 3-900051-07-0.
+\[3\]: R Core Team. R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria, 2012. URL <http://www.R-project.org/>. ISBN 3-900051-07-0.
 
-[4]: R. B. Pebesma, E.J. Classes and methods for spatial data in r, 2005. URL <https://cran.r-project.org/doc/Rnews/>.
+\[4\]: R. B. Pebesma, E.J. Classes and methods for spatial data in r, 2005. URL <https://cran.r-project.org/doc/Rnews/>.
 
-[5]: R. Sieber. Public participation geographic information systems: A literature review and framework. Annals of the Association of American Geographers, 96(3):491-507, 2006. doi: 10.1111/j.1467-8306.2006. 00702.x.
+\[5\]: R. Sieber. Public participation geographic information systems: A literature review and framework. Annals of the Association of American Geographers, 96(3):491-507, 2006. doi: 10.1111/j.1467-8306.2006. 00702.x.
 
-[6]: H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2009. ISBN 978-0-387-98140-6. URL <http://ggplot2.org>.
+\[6\]: H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2009. ISBN 978-0-387-98140-6. URL <http://ggplot2.org>.
 
-[7]: D. Kahle and H. Wickham. ggmap: Spatial visualization with ggplot2. The R Journal, 5(1):144-161, 2013. URL <http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf>.
+\[7\]: D. Kahle and H. Wickham. ggmap: Spatial visualization with ggplot2. The R Journal, 5(1):144-161, 2013. URL <http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf>.
 
-[8]: D. Dunnington. ggspatial: Spatial Data Framework for ggplot2, 2017. URL <https://CRAN.R-project.org/package=ggspatial>. R package version 0.2.1.
+\[8\]: D. Dunnington. ggspatial: Spatial Data Framework for ggplot2, 2017. URL <https://CRAN.R-project.org/package=ggspatial>. R package version 0.2.1.
 
-[9]: T. G. U. RIATE. rCarto: This package builds maps with a full cartographic layout., 2013. URL <https://CRAN.R-project.org/package=rCarto>. R package version 0.8.
+\[9\]: T. G. U. RIATE. rCarto: This package builds maps with a full cartographic layout., 2013. URL <https://CRAN.R-project.org/package=rCarto>. R package version 0.8.
 
-[10]: A. Lamstein and B. P. Johnson. choroplethr: Simplify the Creation of Choropleth Maps in R, 2017. URL <https://CRAN.R-project.org/package=choroplethr>. R package version 3.5.3.
+\[10\]: A. Lamstein and B. P. Johnson. choroplethr: Simplify the Creation of Choropleth Maps in R, 2017. URL <https://CRAN.R-project.org/package=choroplethr>. R package version 3.5.3.
 
-[11]: J. Cheng, B. Karambelkar, and Y. Xie. leaflet: Create Interactive Web Maps with the JavaScript 'Leaflet' Library, 2017. URL <https://CRAN.R-project.org/package=leaflet>. R package version 1.1.0.
+\[11\]: J. Cheng, B. Karambelkar, and Y. Xie. leaflet: Create Interactive Web Maps with the JavaScript 'Leaflet' Library, 2017. URL <https://CRAN.R-project.org/package=leaflet>. R package version 1.1.0.
 
-[12]: W. Chang, J. Cheng, J. Allaire, Y. Xie, and J. McPherson. shiny: Web Application Framework for R, 2017.URL <https://CRAN.R-project.org/package=shiny>. R package version 1.0.0.
+\[12\]: W. Chang, J. Cheng, J. Allaire, Y. Xie, and J. McPherson. shiny: Web Application Framework for R, 2017.URL <https://CRAN.R-project.org/package=shiny>. R package version 1.0.0.
 
-[13]: H.Wickham. A layered grammar of graphics. Journal of Computational and Graphical Statistics, 19(1):3-28, 2010. doi: 10.1198/jcgs.2009.07098.
+\[13\]: H.Wickham. A layered grammar of graphics. Journal of Computational and Graphical Statistics, 19(1):3-28, 2010. doi: 10.1198/jcgs.2009.07098.
 
-[14]: E. R. Tufte. The Visual Display of Quantitative Information. Graphics Press, 2 edition, 2001.
+\[14\]: E. R. Tufte. The Visual Display of Quantitative Information. Graphics Press, 2 edition, 2001.
 
-[15]: J. Tyner. Principles of map design. Guilford, 2014.
+\[15\]: J. Tyner. Principles of map design. Guilford, 2014.
 
-[16]: J. A. Tyner. Persuasive cartography. Journal of Geography, 81(4):140-144, 1982. doi: 10.1080/00221348208980868.
+\[16\]: J. A. Tyner. Persuasive cartography. Journal of Geography, 81(4):140-144, 1982. doi: 10.1080/00221348208980868.
 
-[17]: A. Light and P. J. Bartlein. The end of the rainbow? color schemes for improved data graphics, Jun 2011.
+\[17\]: A. Light and P. J. Bartlein. The end of the rainbow? color schemes for improved data graphics, Jun 2011.
 
-[18]: C. A. Brewer, A. M. Maceachren, L. W. Pickle, and D. Herrmann. Mapping mortality: Evaluating color schemes for choropleth maps. Annals of the Association of American Geographers, 87(3):411-438, 1997. doi: 10.1111/1467-8306.00061.
+\[18\]: C. A. Brewer, A. M. Maceachren, L. W. Pickle, and D. Herrmann. Mapping mortality: Evaluating color schemes for choropleth maps. Annals of the Association of American Geographers, 87(3):411-438, 1997. doi: 10.1111/1467-8306.00061.
 
-[19]: E. Neuwirth. RColorBrewer: ColorBrewer Palettes, 2014. URL <https://CRAN.R-project.org/package=RColorBrewer>. R package version 1.1-2.
+\[19\]: E. Neuwirth. RColorBrewer: ColorBrewer Palettes, 2014. URL <https://CRAN.R-project.org/package=RColorBrewer>. R package version 1.1-2.
 
-[20]: D. A. Green. A colour scheme for the display of astronomical intensity images. Bulletin of the Astromical Society of India, 39:289-295, Jun 2011.
+\[20\]: D. A. Green. A colour scheme for the display of astronomical intensity images. Bulletin of the Astromical Society of India, 39:289-295, Jun 2011.
 
-[21]: R. Evans. rje: Miscellaneous useful functions, 2014. URL <https://CRAN.R-project.org/package=rje>. R package version 1.9.
+\[21\]: R. Evans. rje: Miscellaneous useful functions, 2014. URL <https://CRAN.R-project.org/package=rje>. R package version 1.9.
 
-[22]: M. Monmonier. Lying with maps. Statistical Science, 20(3):215-222, 2005. doi: 10.1214/088342305000000241.
+\[22\]: M. Monmonier. Lying with maps. Statistical Science, 20(3):215-222, 2005. doi: 10.1214/088342305000000241.
 
 
 ## Appendix 1: The Woodson Color Palettes
