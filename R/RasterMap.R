@@ -571,12 +571,12 @@ RasterMap<-function(
             if (!map_colors_limits=="each_dimension"){
               stop("Any character input other than 'each_dimension', which will produce a color ramp from the min/max of each dimension, is not recognized.")
             }
-            maximum<-max(subset[["variable"]])
-            minimum<-min(subset[["variable"]])
+            maximum<-max(subset[["variable"]],na.rm=T)
+            minimum<-min(subset[["variable"]],na.rm=T)
           }
         }else{ # if no map_colors_limits were provided, set the min/max of the scale to the min/max of ALL dimensions of the variable.
-          maximum<-max(map[["variable"]])
-          minimum<-min(map[["variable"]])
+          maximum<-max(map[["variable"]],na.rm=T)
+          minimum<-min(map[["variable"]],na.rm=T)
         }
         
         # Defining color breaks to make the correct Diverging centerpoint, if one was given, based on the min/max.
