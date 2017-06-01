@@ -1,42 +1,15 @@
-<style type="text/css">
-
-body{ /* Normal  */
-   font-size: 12px;
-}
-td {  /* Table  */
-   font-size: 8px;
-}
-h1 { /* Header 1 */
- font-size: 35px;
- color: Black;
-}
-h2 { /* Header 2 */
- font-size: 20px;
- color: Black;
-}
-h3 { /* Header 3 */
- font-size: 16px;
- color: Black;
-}
-code.r{ /* Code block */
-  font-size: 11px;
-}
-pre { /* Code block */
-  font-size: 13px
-}
-</style>
 Introduction
 ------------
 
-The ability for scientists, students, and citizens to easily visualize and analyze spatial data is more crucial than ever. As the amount of freely available geo-referenced data continues to grow, an ever-increasing community is discovering and utilizing spatial information[1](R.%20Sieber.%20Public%20participation%20geographic%20information%20systems:%20A%20literature%20review%20and%20framework.%20Annals%20of%20the%20Association%20of%20American%20Geographers,%2096(3):491-507,%202006.%20doi:%2010.1111/j.1467-8306.2006.%2000702.x.). A host of commercial and open source software with point-and-click interfaces exist for spatial analysis and visualization-- from ESRI's software suite to QGIS, Google Maps and other online options . For those who wish to move beyond the graphical user interface, open-source languages such as R and Python are no longer restricted to those with academic or computer science backgrounds. Massive online open courses, an extensive blogging community, and online forums such as StackExchange provide instruction and trouble-shooting help from any corner of the world. The barriers to a truly participatory geographic information science (GIS) community are being lowered. This explosion of free resources empowers citizen scientists, grassroots organizations, and institutions in low-resource settings to take advantage of the ever-growing library of open-source toolkits for data science. R, as an open-source programming language used extensively for data analysis and statistics, has a variety of tools designed for spatial analysis and visualization .
+The ability for scientists, students, and citizens to easily visualize and analyze spatial data is more crucial than ever. As the amount of freely available geo-referenced data continues to grow, an ever-increasing community is discovering and utilizing spatial information[1](R.%20Sieber.%20Public%20participation%20geographic%20information%20systems:%20A%20literature%20review%20and%20framework.%20Annals%20of%20the%20Association%20of%20American%20Geographers,%2096(3):491-507,%202006.%20doi:%2010.1111/j.1467-8306.2006.%2000702.x.). A host of commercial and open source software with point-and-click interfaces exist for spatial analysis and visualization-- from ESRI's software suite to QGIS, Google Maps and other online options[2](S.%20Steiniger%20and%20E.%20Bocher.%20An%20overview%20on%20current%20free%20and%20open%20source%20desktop%20gis%20developments.International%20Journal%20of%20Geographical%20Information%20Science,%2023(10):1345-1370,%202009.%20doi:%2010.1080/13658810802634956.). For those who wish to move beyond the graphical user interface, open-source languages such as R and Python are no longer restricted to those with academic or computer science backgrounds. Massive online open courses, an extensive blogging community, and online forums such as StackExchange provide instruction and trouble-shooting help from any corner of the world. The barriers to a truly participatory geographic information science (GIS) community are being lowered. This explosion of free resources empowers citizen scientists, grassroots organizations, and institutions in low-resource settings to take advantage of the ever-growing library of open-source toolkits for data science. R, as an open-source programming language used extensively for data analysis and statistics, has a variety of tools designed for spatial analysis and visualization[3](R.%20B.%20Pebesma,%20E.J.%20Classes%20and%20methods%20for%20spatial%20data%20in%20r,%202005.%20URL%20%3Chttps://cran.r-project.org/doc/Rnews/%3E.).
 
-Working with spatial data is not, however, straightforward. Full of idiosyncrasies such as varying data types, projections, and the threat of invalid geometries, there is an additional overhead to working with spatial data. This poses a challenge: how can users with less experience in programming and GIS be brought into the fold? The ability to present and visualize findings from any analysis is critical, and map-making has been shown to be a key tool. Empowered communities have the ability to present maps to decision makers, leading to policy changes .
+Working with spatial data is not, however, straightforward. Full of idiosyncrasies such as varying data types, projections, and the threat of invalid geometries, there is an additional overhead to working with spatial data. This poses a challenge: how can users with less experience in programming and GIS be brought into the fold? The ability to present and visualize findings from any analysis is critical, and map-making has been shown to be a key tool. Empowered communities have the ability to present maps to decision makers, leading to policy changes[5](R.%20Sieber.%20Public%20participation%20geographic%20information%20systems:%20A%20literature%20review%20and%20framework.%20Annals%20of%20the%20Association%20of%20American%20Geographers,%2096(3):491-507,%202006.%20doi:%2010.1111/j.1467-8306.2006.%2000702.x.).
 
-The **MapSuite** package joins a community of prior work on mapping in R. In addition to the **sp** package , which contains both spatial data types and simple plotting functions, a variety of packages focus on spatial data visualization. Finely-customized graphics of many kinds are possible using **ggplot2** , which offers a number of data-driven plotting functions. Mapping-specific packages, such as **ggmap** , **ggspatial** , **rCarto** , and **choroplethR** , each present ways for R users to visualize spatial data. However, none of the currently existing packages emphasize (i) the ability to map quickly and easily over time or subgroup, or (ii) the ability to layer complex maps to create a more sophisticated cartographic output. The growing popularity of interactive tools, such as **Leaflet** and **Shiny** , have changed the landscape of what it means to visualize multi-dimensional data. However, generating images and PDFs of results is still a key way to share and present results.
+The **MapSuite** package joins a community of prior work on mapping in R. In addition to the **sp** package[4](R.%20B.%20Pebesma,%20E.J.%20Classes%20and%20methods%20for%20spatial%20data%20in%20r,%202005.%20URL%20%3Chttps://cran.r-project.org/doc/Rnews/%3E.), which contains both spatial data types and simple plotting functions, a variety of packages focus on spatial data visualization. Finely-customized graphics of many kinds are possible using **ggplot2**[6](H.%20Wickham.%20ggplot2:%20Elegant%20Graphics%20for%20Data%20Analysis.%20Springer-Verlag%20New%20York,%202009.%20ISBN%20978-0-387-98140-6.%20URL%20%3Chttp://ggplot2.org%3E.), which offers a number of data-driven plotting functions. Mapping-specific packages, such as **ggmap** [7](D.%20Kahle%20and%20H.%20Wickham.%20ggmap:%20Spatial%20visualization%20with%20ggplot2.%20The%20R%20Journal,%205(1):144-161,%202013.%20URL%20%3Chttp://journal.r-project.org/archive/2013-1/kahle-wickham.pdf%3E.), **ggspatial**[8](D.%20Dunnington.%20ggspatial:%20Spatial%20Data%20Framework%20for%20ggplot2,%202017.%20URL%20%3Chttps://CRAN.R-project.org/package=ggspatial%3E.%20R%20package%20version%200.2.1.), **rCarto** [9](T.%20G.%20U.%20RIATE.%20rCarto:%20This%20package%20builds%20maps%20with%20a%20full%20cartographic%20layout.,%202013.%20URL%20%3Chttps://CRAN.R-project.org/package=rCarto%3E.%20R%20package%20version%200.8.), and **choroplethR** [10](A.%20Lamstein%20and%20B.%20P.%20Johnson.%20choroplethr:%20Simplify%20the%20Creation%20of%20Choropleth%20Maps%20in%20R,%202017.%20URL%20%3Chttps://CRAN.R-project.org/package=choroplethr%3E.%20R%20package%20version%203.5.3.), each present ways for R users to visualize spatial data. However, none of the currently existing packages emphasize (i) the ability to map quickly and easily over time or subgroup, or (ii) the ability to layer complex maps to create a more sophisticated cartographic output. The growing popularity of interactive tools, such as **Leaflet**\[11\] and **Shiny**[12](W.%20Chang,%20J.%20Cheng,%20J.%20Allaire,%20Y.%20Xie,%20and%20J.%20McPherson.%20shiny:%20Web%20Application%20Framework%20for%20R,%202017.URL%20%3Chttps://CRAN.R-project.org/package=shiny%3E.%20R%20package%20version%201.0.0.), have changed the landscape of what it means to visualize multi-dimensional data. However, generating images and PDFs of results is still a key way to share and present results.
 
-Many of the static graphics packages, such as **ggplot** and **ggmap**, utilize a paradigm established in R by Hadley Wickham called the "grammar of graphics" . Within the "grammar of graphics," a plot is built in layers, where the data forms the foundation of the plot, and different geometric outputs (points, paths/lines, and polygons) can be layered and manipulated to generate a diagram. This approach to code has many advantages-- the syntax is highly flexible and well-suited to the kinds of data used by and produced from statistical analyses. There is also extensive documentation on how to use **ggplot2**, and how to achieve a variety of effects using this flexible package.
+Many of the static graphics packages, such as **ggplot** and **ggmap**, utilize a paradigm established in R by Hadley Wickham called the "grammar of graphics"[13](H.Wickham.%20A%20layered%20grammar%20of%20graphics.%20Journal%20of%20Computational%20and%20Graphical%20Statistics,%2019(1):3-28,%202010.%20doi:%2010.1198/jcgs.2009.07098.). Within the "grammar of graphics," a plot is built in layers, where the data forms the foundation of the plot, and different geometric outputs (points, paths/lines, and polygons) can be layered and manipulated to generate a diagram. This approach to code has many advantages-- the syntax is highly flexible and well-suited to the kinds of data used by and produced from statistical analyses. There is also extensive documentation on how to use **ggplot2**, and how to achieve a variety of effects using this flexible package.
 
-The MapSuite package uses the **ggplot2** library as a launching point for making maps, using three main functions (PolygonMap, PointMap, and RasterMap) as a wrapper for **ggplot2**'s geom\_polygon, geom\_point and geom\_raster geometries. Unlike building a plot from scratch in **ggplot2**, these functions demand relatively few inputs to create a pleasing choropleth map. The default settings of the MapSuite are designed to follow a set of graphical guidelines set forth by E.R. Tufte .
+The MapSuite package uses the **ggplot2** library as a launching point for making maps, using three main functions (PolygonMap, PointMap, and RasterMap) as a wrapper for **ggplot2**'s geom\_polygon, geom\_point and geom\_raster geometries. Unlike building a plot from scratch in **ggplot2**, these functions demand relatively few inputs to create a pleasing choropleth map. The default settings of the MapSuite are designed to follow a set of graphical guidelines set forth by E.R. Tufte[14](E.%20R.%20Tufte.%20The%20Visual%20Display%20of%20Quantitative%20Information.%20Graphics%20Press,%202%20edition,%202001.).
 
 ### Maximizing the data-to-ink ratio
 
@@ -56,21 +29,16 @@ The maps produced by the **MapSuite** package default settings are designed to f
 
 For the purposes of this introduction to the MapSuite package, the following data sets will be used:
 
-\begin{table}[ht]
-\centering
-\begin{tabular}{ll}
-  \hline
-Object Name & Description \\ 
-  \hline
-county\_polygons & A SpatialPolygonsDataFrame of county boundaries \\ 
-  county\_centroids & A data.table with coordinates for county centroids \\ 
-  county\_pixels & A data.table with coordinates on a regular grid \\ 
-  county\_simulated & A data.table of simulated data  at the county level \\ 
-  county\_simulated\_time & A data.table of simulated data at the county level, multiple time periods \\ 
-   \hline
-\end{tabular}
-\end{table}
-Each of the polygons, centroids, and pixels objects contain columns with a unique identifier ('cnty'), and columns for state name ('state\_name'), and the mean elevation of the county ('elevation'). The data and spatial objects can be subset by state name, allowing for graphics focusing on a particular area (the states of Washington and Colorado are emphasized in these examples).
+-   county\_polygons
+    -   A SpatialPolygonsDataFrame of county boundaries
+-   county\_centroids
+    -   A data.table with coordinates for county centroids
+-   county\_pixels
+    -   A data.table with coordinates on a regular grid
+-   county\_simulated\_time
+    -   A data.table of simulated data at the county level
+
+Each of the polygons, centroids, and pixels objects contain columns with a unique identifier ('cnty'), and columns for state name ('state\_name'), and the mean elevation of the county ('elevation'). The data and spatial objects can be subset by state name, allowing for graphics focusing on a particular area (the states of Washington and Colorado are emphasized in these examples). Subsets of these data sets for individual states are also used.
 
 Showing the data: plotting basic geometries and variables
 ---------------------------------------------------------
@@ -98,7 +66,7 @@ PointMap(coords=wa_centroids, id="cnty", xcol="x_albers", ycol="y_albers")
 RasterMap(coords=wa_pixels, id="cnty", xcol="x_albers", ycol="y_albers")
 ```
 
-<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-4-1.png" alt="Mapping Point, Polygon, and Raster Data"  />
+<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-3-1.png" alt="Mapping Point, Polygon, and Raster Data"  />
 <p class="caption">
 Mapping Point, Polygon, and Raster Data
 </p>
@@ -113,7 +81,7 @@ PointMap(coords=wa_centroids,id="cnty", xcol="x_albers", ycol="y_albers",
          outline = wa_polygons, outline_size = 1, outline_color = "black")
 ```
 
-<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-6-1.png" alt="Changing basic map aesthetics and adding outline polygons"  />
+<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-5-1.png" alt="Changing basic map aesthetics and adding outline polygons"  />
 <p class="caption">
 Changing basic map aesthetics and adding outline polygons
 </p>
@@ -127,7 +95,7 @@ PolygonMap(map=wa_polygons, id="cnty", map_colors = "lightblue",
            map_title="Okanagan County")
 ```
 
-<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-7-1.png" alt="Fig 3: Using outlines to add emphasis"  />
+<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-6-1.png" alt="Fig 3: Using outlines to add emphasis"  />
 <p class="caption">
 Fig 3: Using outlines to add emphasis
 </p>
@@ -141,7 +109,7 @@ county_polygons@data[,above_below:=ifelse(county_polygons@data[["elevation"]]>10
 PolygonMap(map=county_polygons, id="cnty", variable="above_below", legend_title = "Mean Elevation")
 ```
 
-<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-10-1.png" alt="Mapping binned and categorical data"  />
+<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-9-1.png" alt="Mapping binned and categorical data"  />
 <p class="caption">
 Mapping binned and categorical data
 </p>
@@ -158,12 +126,10 @@ PolygonMap(map=county_polygons, id="cnty", variable="elevation",
            legend_label_values = c("Sea Level","1 mile high"),legend_label_breaks =c(10,3250))
 ```
 
-<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-11-1.png" alt="Changing color schemes and legend properties"  />
+<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-10-1.png" alt="Changing color schemes and legend properties"  />
 <p class="caption">
 Changing color schemes and legend properties
 </p>
-
-\newpage
 
 For point data, a separate variable can be defined as the variable that describes the size of the points.
 
@@ -174,7 +140,7 @@ PointMap(coords=county_centroids, id="cnty", xcol="x_albers", ycol="y_albers", m
          legend_position = "right", legend_orientation = "horizontal", legend_stacking="vertical")
 ```
 
-<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-12-1.png" alt="Modifying point size based on another variable"  />
+<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-11-1.png" alt="Modifying point size based on another variable"  />
 <p class="caption">
 Modifying point size based on another variable
 </p>
@@ -202,25 +168,24 @@ PolygonMap(map=county_polygons,data=county_simulated,
            id="cnty", variable="var2", map_title="Simulated Variable 2")
 ```
 
-<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-14-1.png" alt="Mapping two different variables from an external data frame"  />
+<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-13-1.png" alt="Mapping two different variables from an external data frame"  />
 <p class="caption">
 Mapping two different variables from an external data frame
 </p>
 
-\newpage
 Avoiding distoring what the data have to say
 --------------------------------------------
 
-The hue (pigment), saturation (intensity), and value (darkness) chosen to portray data can dramatically change their perception . Color is an important consideration for any graphic-- however, it is especially crucial to consider when making maps due to the trust awarded to cartographers by the public. As Judith Tyner noticed in 1982, "map users, especially those who examine maps infrequently, tend to place inordinate faith in maps and accept them as true and complete representations" .
+The hue (pigment), saturation (intensity), and value (darkness) chosen to portray data can dramatically change their perception[15](J.%20Tyner.%20Principles%20of%20map%20design.%20Guilford,%202014.). Color is an important consideration for any graphic-- however, it is especially crucial to consider when making maps due to the trust awarded to cartographers by the public. As Judith Tyner noticed in 1982, "map users, especially those who examine maps infrequently, tend to place inordinate faith in maps and accept them as true and complete representations"[16](J.%20A.%20Tyner.%20Persuasive%20cartography.%20Journal%20of%20Geography,%2081(4):140-144,%201982.%20doi:%2010.1080/00221348208980868.).
 
-Research on the color choices that underpin readable maps and graphics has provided nuanced insight towards what kind of color palettes are most effective for representing numeric or sequential data. Broadly, three main categories of color scale exist: sequential, diverging, and categorical. Sequential palettes move through at least two colors, often going from light-to-dark (or vice versa). A diverging scheme passes through at least three colors, as two colors "diverge" from a shared middle ground. Categorical color schemes have no trajectory-- and are often chosen to be dissimilar from one another such that the reader can easily tell the difference between two categories. Broadly, sequential color schemes are used when the entire range of the data is important, but there is no central value with special significance that serves as a frame of reference. In contrast, diverging color schemes are recommended when the data have a meaningful central value that can be used as a frame of reference. This can be either a specific cutoff based on knowledge of values of relevance (such as values above and below 0, or a certain threshold), or based some parameter of the data (for example, mapping Z-scores that diverge from 0). One special case of the diverging color scheme is the "spectral scheme," alternatatively known as the "rainbow scheme," that passed through the full (or modified) color space of red-orange-yellow-green-blue-indigo-violet. Although some researchers argue against this rainbow color scheme , others have advocated its use in specific scenarios, such as the mapping of mortality rates, where map readers could easily differentiate between the low values colored in blue, and the higher values coded in red .
+Research on the color choices that underpin readable maps and graphics has provided nuanced insight towards what kind of color palettes are most effective for representing numeric or sequential data. Broadly, three main categories of color scale exist: sequential, diverging, and categorical. Sequential palettes move through at least two colors, often going from light-to-dark (or vice versa). A diverging scheme passes through at least three colors, as two colors "diverge" from a shared middle ground. Categorical color schemes have no trajectory-- and are often chosen to be dissimilar from one another such that the reader can easily tell the difference between two categories. Broadly, sequential color schemes are used when the entire range of the data is important, but there is no central value with special significance that serves as a frame of reference. In contrast, diverging color schemes are recommended when the data have a meaningful central value that can be used as a frame of reference. This can be either a specific cutoff based on knowledge of values of relevance (such as values above and below 0, or a certain threshold), or based some parameter of the data (for example, mapping Z-scores that diverge from 0). One special case of the diverging color scheme is the "spectral scheme," alternatatively known as the "rainbow scheme," that passed through the full (or modified) color space of red-orange-yellow-green-blue-indigo-violet. Although some researchers argue against this rainbow color scheme[17](A.%20Light%20and%20P.%20J.%20Bartlein.%20The%20end%20of%20the%20rainbow?%20color%20schemes%20for%20improved%20data%20graphics,%20Jun%202011.), others have advocated its use in specific scenarios, such as the mapping of mortality rates, where map readers could easily differentiate between the low values colored in blue, and the higher values coded in red[18](C.%20A.%20Brewer,%20A.%20M.%20Maceachren,%20L.%20W.%20Pickle,%20and%20D.%20Herrmann.%20Mapping%20mortality:%20Evaluating%20color%20schemes%20for%20choropleth%20maps.%20Annals%20of%20the%20Association%20of%20American%20Geographers,%2087(3):411-438,%201997.%20doi:%2010.1111/1467-8306.00061.).
 
 <!-- Color Palette Examples -->
+<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-14-1.png" style="display: block; margin: auto;" />
+
+The "ColorBrewer" project of Cynthia Brewer, available in R through the package **RColorBrewer**[19](E.%20Neuwirth.%20RColorBrewer:%20ColorBrewer%20Palettes,%202014.%20URL%20%3Chttps://CRAN.R-project.org/package=RColorBrewer%3E.%20R%20package%20version%201.1-2.) contains a variety of color schemes used regularly within the mapping community. However, the sequential palettes presented in RColorBrewer often do not contain more than two or three colors, limiting the differentiation possible between data values. A member of the astronomy community, Dave Green, developed the "cubehelix" algorithm to differentiate star-brightness values from observations of the night sky. The "cubehelix" is a virtual corkscrew moving through a cube of red-green-blue color space on a trajectory from dark to light[20](D.%20A.%20Green.%20A%20colour%20scheme%20for%20the%20display%20of%20astronomical%20intensity%20images.%20Bulletin%20of%20the%20Astromical%20Society%20of%20India,%2039:289-295,%20Jun%202011.). This function has been adapted for R in the **rje** package[21](R.%20Evans.%20rje:%20Miscellaneous%20useful%20functions,%202014.%20URL%20%3Chttps://CRAN.R-project.org/package=rje%3E.%20R%20package%20version%201.9.), where users can define the following variables in order to produce a variety of diferent color palettes moving from dark to light: (i) the number of rotations, (ii) how large the radius of the corkscrew is, and (iii) the saturation. The permutations for color palettes that can be created with this function is nearly endless.
+
 <img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-15-1.png" style="display: block; margin: auto;" />
-
-The "ColorBrewer" project of Cynthia Brewer, available in R through the package **RColorBrewer** contains a variety of color schemes used regularly within the mapping community. However, the sequential palettes presented in RColorBrewer often do not contain more than two or three colors, limiting the differentiation possible between data values. A member of the astronomy community, Dave Green, developed the "cubehelix" algorithm to differentiate star-brightness values from observations of the night sky. The "cubehelix" is a virtual corkscrew moving through a cube of red-green-blue color space on a trajectory from dark to light . This function has been adapted for R in the **rje** package , where users can define the following variables in order to produce a variety of diferent color palettes moving from dark to light: (i) the number of rotations, (ii) how large the radius of the corkscrew is, and (iii) the saturation. The permutations for color palettes that can be created with this function is nearly endless.
-
-<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-16-1.png" style="display: block; margin: auto;" />
 
 Within the **MapSuite** library, a series of curated sequential and diverging palettes derived from the cubehelix algorithm are contained within the wpal function. The **MapSuite**'s "Woodson Palettes" are lists of color values that can be called upon by both the main mapping functions and any other function that accepts a list of colors in R. Using the MapSuite's wpal function, users can specify a number of colors that will be interpolated, as well as whether black will be included (if it exists in the color palette). If you wish to explore or view a specific Woodson Palette's default colors, the ViewPal function will plot the desired color ramp. The PlotColors function allows the plotting of any list of colors, including a modified Woodson Palette.
 
@@ -230,7 +195,7 @@ ViewPal("seaglass",base_size=6)
 
     ## [1] "Plotting wpal color scheme seaglass"
 
-<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-17-1.png" style="display: block; margin: auto;" />
+<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-16-1.png" style="display: block; margin: auto;" />
 
 To use a Woodson Palette in reverse (re-ordered dark-to-light), the function rev() can be used sort the color pallette in reverse order.
 
@@ -239,47 +204,45 @@ more_colors<-rev(wpal("seaglass",n=12,noblack=T))
 PlotColors(more_colors, color_list_name="Reversed Ramp with More Colors",base_size = 6)
 ```
 
-<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-18-1.png" style="display: block; margin: auto;" />
+<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-17-1.png" style="display: block; margin: auto;" />
 
 Our instinct to assign value judgments ("red is bad, blue is good") to color scales is simultaneously what makes them effective and conversely problematic. While there are some variables that can be clearly discerned as favorable and non-favorable (like mortality rates), visualizing quantities like the proportion of people belonging to a minority racial group on a similar color scale is far from appropriate. When visualizing a large quantity of data, where subtle spatial differences should be clear to the viewer, a diverging color palette that moves through three colors tends to add more clarity and visual precision than a sequential palette moving through only two. As such, there is the temptation to use diverging colors such as the spectral color scheme to represent data that may not have a meaningful central value, and may not have a clear "good" and "bad" connotation. For this reason, making color palettes based on a cubehelix color scheme that move from light to dark, rather than from a "good" color to a "bad" color, could serve an important purpose in visualizing data in social sciences. The default color scheme (called "earth"), moves in a sequence (yellow, blue, green, brown, purple, then black) designed to provide value differentiation without a moral or emotional value judgment. These scales, moving from light to dark, will also preserve the relationships between data values and pigment value, even when printed in black and white, and when viewed by the colorblind.
 
 It is worth noting that the same color scale can look quite different based on the number of geometries or data points present-- while a color ramp that goes through many colors looks appropriate with large numbers of data points or geometries, too few can create a "chunky" or categorical look. In these circumstances, choosing a color palette with fewer colors may provide a more pleasing and readable map. To showcase the extent to which color and binning (converting a continuous variable to a categorical one) impact the visual appearance of data, the same data will be used in figures 9-12.
 
 <!-- Examples of scary, non-scary palettes-->
-<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-19-1.png" alt="The same data, represented using three different color schemes"  />
+<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-18-1.png" alt="The same data, represented using three different color schemes"  />
 <p class="caption">
 The same data, represented using three different color schemes
 </p>
 
 To explore these colors, and how they impact how data are portrayed, visit and explore [this online visualization tool](https://rebeccastubbs.shinyapps.io/woodson_shiny_example/), which contains a variety of color palettes that can be tested on different variables and for varying numbers of data points.
 
-\newpage
-The default use of continuous color scales for numeric data is designed to minimize the visual bias that occurs from data classification into discrete groups, which can "reveal meaningful spatial trends or promote misleading interpretations" of the data . Although different color schemes and ramps can emphasize or subdue patterns in the data, a continuous color scale that ranges through the minimum and maximum values is subject to one fewer source of bias-- the choice of what classification scheme to use. Classifying or binning data has the danger of making values that are similar appear distant from one another due to proximity to the breaks values, and the size and divisions used to create data categories can dramatically change the visual appearance of the data.
+The default use of continuous color scales for numeric data is designed to minimize the visual bias that occurs from data classification into discrete groups, which can "reveal meaningful spatial trends or promote misleading interpretations" of the data[22](M.%20Monmonier.%20Lying%20with%20maps.%20Statistical%20Science,%2020(3):215-222,%202005.%20doi:%2010.1214/088342305000000241.). Although different color schemes and ramps can emphasize or subdue patterns in the data, a continuous color scale that ranges through the minimum and maximum values is subject to one fewer source of bias-- the choice of what classification scheme to use. Classifying or binning data has the danger of making values that are similar appear distant from one another due to proximity to the breaks values, and the size and divisions used to create data categories can dramatically change the visual appearance of the data.
 
-<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-20-1.png" alt="Two different binning methods"  />
+<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-19-1.png" alt="Two different binning methods"  />
 <p class="caption">
 Two different binning methods
 </p>
 
 To define the minimum and maximum of the color scale separately from the minimum and maximum of the data variable you are mapping, a two-item vector (with a minimum and maximum) can be passed to the map\_colors\_limits parameter. For those who wish to highlight or emphasize some portion of the data without using binned categories, the parameter map\_color\_breaks allows users to change how the color ramp is applied to the range of the data. Note that this approach does not change the values, or the "truth" presented by the maps-- it simply changes how the colors are stretched across the minimum and maximum of the scale. However, these changes can dramatically change the *appearance* of the data.
 
-<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-21-1.png" alt="Changing how the colors are stretched across the data: (i) Evenly from the minimum to the maximum (top left), (ii) Artificially extending the range of the colors to 0-300, which is larger than the range of the data (top right), and (iii) Changing whether light or dark colors occupy more of the range of the data by shifting how the same colors are applied to the dataas in top left, or in a way where more dark or light colors cover the majority of the range (bottom)"  />
+<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-20-1.png" alt="Changing how the colors are stretched across the data: (i) Evenly from the minimum to the maximum (top left), (ii) Artificially extending the range of the colors to 0-300, which is larger than the range of the data (top right), and (iii) Changing whether light or dark colors occupy more of the range of the data by shifting how the same colors are applied to the dataas in top left, or in a way where more dark or light colors cover the majority of the range (bottom)"  />
 <p class="caption">
 Changing how the colors are stretched across the data: (i) Evenly from the minimum to the maximum (top left), (ii) Artificially extending the range of the colors to 0-300, which is larger than the range of the data (top right), and (iii) Changing whether light or dark colors occupy more of the range of the data by shifting how the same colors are applied to the dataas in top left, or in a way where more dark or light colors cover the majority of the range (bottom)
 </p>
 
 If there is a meaningful central point or cutoff in your data, it is possible to set the numeric value that will serve as the central color in a diverging scale:
 
-<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-22-1.png" alt="Using two different numeric values (20 and 50) to center the color scheme on a meaingful value"  />
+<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-21-1.png" alt="Using two different numeric values (20 and 50) to center the color scheme on a meaingful value"  />
 <p class="caption">
 Using two different numeric values (20 and 50) to center the color scheme on a meaingful value
 </p>
 
-\newpage
 Present many numbers in a small space: color-coded histograms
 -------------------------------------------------------------
 
-While a good map can highlight spatial patterns, a histogram of the data being represented on the map illuminates the non-spatial trends in the distribution. As noted by Mark Monmonier, author of *How to Lie With Maps*, a secondary graphic that shows the data distribution is an important aspect of revealing the data's truth. He notes that "if the map author is at all concerned with full disclosure, a ...histogram... is a must" .
+While a good map can highlight spatial patterns, a histogram of the data being represented on the map illuminates the non-spatial trends in the distribution. As noted by Mark Monmonier, author of *How to Lie With Maps*, a secondary graphic that shows the data distribution is an important aspect of revealing the data's truth. He notes that "if the map author is at all concerned with full disclosure, a ...histogram... is a must"[22](M.%20Monmonier.%20Lying%20with%20maps.%20Statistical%20Science,%2020(3):215-222,%202005.%20doi:%2010.1214/088342305000000241.).
 
 However, visually linking a histogram to a 2-dimensional spatial distribution can be difficult. To make the comparison of spatial distributions and densities, the function HistogramColorStats provides extra context by linking histogram color to choropleth color. In addition, references to properties of the distribution can be referenced in the form of colored lines that highlight data parameters. Users can pass a vector of statistical terms (currently supported are the mean, median, standard deviation, and any number of quantiles) to the function, which will provide even more visual cues to help understand the patterns in the data.
 
@@ -288,7 +251,7 @@ HistogramColorstats(datavector=county_simulated[["var2"]], color_ramp=wpal("seag
                     title="Simulated variable 2",dist_stats=c("mean",.25,.75))
 ```
 
-<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-23-1.png" style="display: block; margin: auto;" />
+<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-22-1.png" style="display: block; margin: auto;" />
 
 This functionality is integrated into the main mapping functions with the use of a 'histogram' parameter. When set to TRUE, the histogram will be placed at the bottom of the map, with the same limits and scaling as the map. To modify the histogram or its position, users can generate the histogram separately, using the function histogram\_colorstats(), and modify the placements and formatting of the histogram as desired.
 
@@ -300,7 +263,7 @@ RasterMap(coords=county_pixels[state_name=="Colorado"], id="cnty", xcol="x_alber
           histogram=T)
 ```
 
-<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-24-1.png" alt="A map with a histogram of the data distribution"  />
+<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-23-1.png" alt="A map with a histogram of the data distribution"  />
 <p class="caption">
 A map with a histogram of the data distribution
 </p>
@@ -310,7 +273,7 @@ Encourage the eye to compare different pieces of data: visualizing by subgroup o
 
 Even vast quantities of data (often referred to as "big data") can often be parsed into smaller, more illuminating subgroups. To map the same variable with repeated measurements in different time points, mapping software programs often require that these data are formatted "wide," such that each version of that variable is in its own separate column. Big, multi-dimensional data structures (such as a mortality rate by age, sex, and year) do not fit well in this paradigm. A more sensible structure (often used in data analysis) is the "long" format, where (i) the data identifiers or primary keys (such as the geometry's ID variable, age, sex, and time) each are represented as columns in a data set, and (ii) there is only one column for each variable of interest (available in different combinations of age, sex, and time).
 
-Maintaining a consistent color classification scheme across these subgroups is a crucial part of comparing and contrasting the data. As Monmonier notes, "just as cut-points (data classification schemes) can be manipulated...pairs of choropleth maps can purposely heighten or suppress perceptions of bivariate association" . **MapSuite**'s mapping functions make this easy. By defining a column in the external data set as the 'series dimension' of the data, or the dimension of the data (for example, time or age) that you wish to iterate over, the functions will produce a series of maps. These maps will have the same ranges by default (consistent colors applied to each subset of the data based on the minimum and maximum of the observed data across all dimensions). If desired, the ranges used to produce the color scheme can be generated for each subset, by setting the map\_colors\_limits parameter to "each\_dimension". One can restrict the quantity of maps made (if you are only interested in certain sub-groups of the data represented in the external data frame), providing a 'series sequence' that will restrict the loop of maps made to only the specified levels. By default, a subtitle will be generated that is the specific level or dimension of the data that is being mapped. For example, if the variable as the series dimension is 'year', the subtitle for each map would change to represent the specific time period represented in the graphic. When a series dimension is provided, text entered into the 'subtitle' parameter will serve as the prefix for the automatically generated generated subtitle based on the levels of the data that are being mapped.
+Maintaining a consistent color classification scheme across these subgroups is a crucial part of comparing and contrasting the data. As Monmonier notes, "just as cut-points (data classification schemes) can be manipulated...pairs of choropleth maps can purposely heighten or suppress perceptions of bivariate association"[22](M.%20Monmonier.%20Lying%20with%20maps.%20Statistical%20Science,%2020(3):215-222,%202005.%20doi:%2010.1214/088342305000000241.). **MapSuite**'s mapping functions make this easy. By defining a column in the external data set as the 'series dimension' of the data, or the dimension of the data (for example, time or age) that you wish to iterate over, the functions will produce a series of maps. These maps will have the same ranges by default (consistent colors applied to each subset of the data based on the minimum and maximum of the observed data across all dimensions). If desired, the ranges used to produce the color scheme can be generated for each subset, by setting the map\_colors\_limits parameter to "each\_dimension". One can restrict the quantity of maps made (if you are only interested in certain sub-groups of the data represented in the external data frame), providing a 'series sequence' that will restrict the loop of maps made to only the specified levels. By default, a subtitle will be generated that is the specific level or dimension of the data that is being mapped. For example, if the variable as the series dimension is 'year', the subtitle for each map would change to represent the specific time period represented in the graphic. When a series dimension is provided, text entered into the 'subtitle' parameter will serve as the prefix for the automatically generated generated subtitle based on the levels of the data that are being mapped.
 
 ``` r
 PolygonMap(map=colorado, id="cnty", data=county_simulated_time,
@@ -319,7 +282,7 @@ PolygonMap(map=colorado, id="cnty", data=county_simulated_time,
             legend_orientation= "vertical", map_subtitle="Year: ", map_title="Var 3")
 ```
 
-<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-26-1.png" alt="Three plots with standardized color schemes output from visualizing a time series. For the purposes of this illustration, these plots have been aligned horizontally, but would usually appear in separate plots."  />
+<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-25-1.png" alt="Three plots with standardized color schemes output from visualizing a time series. For the purposes of this illustration, these plots have been aligned horizontally, but would usually appear in separate plots."  />
 <p class="caption">
 Three plots with standardized color schemes output from visualizing a time series. For the purposes of this illustration, these plots have been aligned horizontally, but would usually appear in separate plots.
 </p>
@@ -362,8 +325,8 @@ A number of packages exist to visualize spatial data in R. The MapSuite package 
 References
 ==========
 
-\bibliography{RJreferences}
-\newpage
+\[11\]: J. Cheng, B. Karambelkar, and Y. Xie. leaflet: Create Interactive Web Maps with the JavaScript 'Leaflet' Library, 2017. URL <https://CRAN.R-project.org/package=leaflet>. R package version 1.1.0.
+
 Appendix 1: The Woodson Color Palettes
 --------------------------------------
 
@@ -373,4 +336,4 @@ ViewPal(color=NULL, n=9, base_size = 7, listcolors=F, n_per_page=9, labelcolors=
 
     ## [1] "No color specified; plotting all colors"
 
-<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-29-1.png" style="display: block; margin: auto;" /><img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-29-2.png" style="display: block; margin: auto;" /><img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-29-3.png" style="display: block; margin: auto;" /><img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-29-4.png" style="display: block; margin: auto;" /><img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-29-5.png" style="display: block; margin: auto;" /><img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-29-6.png" style="display: block; margin: auto;" /><img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-29-7.png" style="display: block; margin: auto;" /><img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-29-8.png" style="display: block; margin: auto;" /><img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-29-9.png" style="display: block; margin: auto;" />
+<img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-28-1.png" style="display: block; margin: auto;" /><img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-28-2.png" style="display: block; margin: auto;" /><img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-28-3.png" style="display: block; margin: auto;" /><img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-28-4.png" style="display: block; margin: auto;" /><img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-28-5.png" style="display: block; margin: auto;" /><img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-28-6.png" style="display: block; margin: auto;" /><img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-28-7.png" style="display: block; margin: auto;" /><img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-28-8.png" style="display: block; margin: auto;" /><img src="MapSuite_Documentation_files/figure-markdown_github/unnamed-chunk-28-9.png" style="display: block; margin: auto;" />
