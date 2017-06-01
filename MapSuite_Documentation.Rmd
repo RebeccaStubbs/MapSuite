@@ -12,6 +12,8 @@ classoption: landscape
 
 ```{r global_options, include=FALSE}
 knitr::opts_chunk$set(fig.pos = 'h')
+knitr::opts_chunk$set(fig.width = 10)
+knitr::opts_chunk$set(fig.height = 3)
 ```
 
 ```{r,echo=F,eval=TRUE,message=F, include=F}
@@ -115,7 +117,7 @@ PolygonMap(map=wa_polygons, id="cnty")
 PointMap(coords=wa_centroids, id="cnty", xcol="x_albers", ycol="y_albers")
 RasterMap(coords=wa_pixels, id="cnty", xcol="x_albers", ycol="y_albers")
 ```
-```{r, echo=F, fig.height=1.5, fig.width=6, fig.align='center', message=F, warning=F,fig.cap="Mapping Point, Polygon, and Raster Data"}
+```{r, echo=F, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F,fig.cap="Mapping Point, Polygon, and Raster Data"}
 poly<-PolygonMap(map=wa_polygons,
            id="cnty",
            return_objects = T)
