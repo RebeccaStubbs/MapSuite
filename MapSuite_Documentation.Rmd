@@ -13,7 +13,7 @@ classoption: landscape
 ```{r global_options, include=FALSE}
 knitr::opts_chunk$set(fig.pos = 'h')
 knitr::opts_chunk$set(fig.width = 10)
-knitr::opts_chunk$set(fig.height = 3)
+knitr::opts_chunk$set(dpi=300, fig.height = 3)
 ```
 
 ```{r,echo=F,eval=TRUE,message=F, include=F}
@@ -117,7 +117,7 @@ PolygonMap(map=wa_polygons, id="cnty")
 PointMap(coords=wa_centroids, id="cnty", xcol="x_albers", ycol="y_albers")
 RasterMap(coords=wa_pixels, id="cnty", xcol="x_albers", ycol="y_albers")
 ```
-```{r, echo=F, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F,fig.cap="Mapping Point, Polygon, and Raster Data"}
+```{r, echo=F, dpi=300, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F,fig.cap="Mapping Point, Polygon, and Raster Data"}
 poly<-PolygonMap(map=wa_polygons,
            id="cnty",
            return_objects = T)
@@ -140,7 +140,7 @@ PointMap(coords=wa_centroids,id="cnty", xcol="x_albers", ycol="y_albers",
          map_colors = "red", pointsize = 1, 
          outline = wa_polygons, outline_size = 1, outline_color = "black")
 ```
-```{r, echo=F, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F,fig.cap="Changing basic map aesthetics and adding outline polygons"}
+```{r, echo=F, dpi=300, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F,fig.cap="Changing basic map aesthetics and adding outline polygons"}
 poly<-PolygonMap(map=wa_polygons, id="cnty",
          map_colors = "lightgreen", map_outline_color ="black",
          return_objects = T)
@@ -152,7 +152,7 @@ cowplot::plot_grid(poly$map, point$map, nrow=1, align="h")
 
 To achieve a stronger figure-ground effect where a certain area is visually emphasized, adding an outline of a different shape and color can be utlizied by passing a different SpatialPolygonsDataFrame to the outline parameter, or by passing only a subset of the SpatialPolygonsDataFrame used for the main map to the outline parameter.
 
-```{r,fig.height=3, fig.width=10,fig.align='center', message=F, warning=F,fig.cap="Fig 3: Using outlines to add emphasis"}
+```{r,dpi=300, fig.height=3, fig.width=10,fig.align='center', message=F, warning=F,fig.cap="Fig 3: Using outlines to add emphasis"}
 Okanagan<-wa_polygons[wa_polygons@data[["cnty"]]==2944,]
 PolygonMap(map=wa_polygons, id="cnty", map_colors = "lightblue", 
            outline = Okanagan, outline_size = 1, outline_color = "orange",
@@ -177,7 +177,7 @@ PolygonMap(map=county_polygons,
 ```{r, echo=F, results='hide', eval=T}
 county_polygons@data[,above_below:=ifelse(county_polygons@data[["elevation"]]>1000, "<1,000 ft",">1,000 ft")]
 ```
-```{r, echo=F, fig.height=3, fig.width=10,fig.align='center', message=F, warning=F,fig.cap="Mapping binned and categorical data"}
+```{r, echo=F, dpi=300, fig.height=3, fig.width=10,fig.align='center', message=F, warning=F,fig.cap="Mapping binned and categorical data"}
 continuous<-PolygonMap(map=county_polygons, id="cnty", variable="elevation", map_title="Mean Elevation", return_objects = T, font_size = 8)
 categorical<-PolygonMap(map=county_polygons, id="cnty", variable="above_below", legend_title = "Mean Elevation",return_objects = T, font_size = 8)
 
@@ -189,7 +189,7 @@ print(categorical$map, vp = vplayout(1, 2))
 
 Although providing a color range is not required (a default color scheme will portray the data), it is easy to change. It is also possible to label specific cut-points on the legend with values of interest, and modify font and legend properties. 
 
-```{r,fig.height=3, fig.width=10,fig.align='center', message=F, warning=F,fig.cap="Changing color schemes and legend properties"}
+```{r,dpi=300, fig.height=3, fig.width=10,fig.align='center', message=F, warning=F,fig.cap="Changing color schemes and legend properties"}
 PolygonMap(map=county_polygons, id="cnty", variable="elevation",
            map_colors=c("red","yellow","white","blue","violet"),
            map_title="United States", map_title_font_face = "bold", font_size = 8,
@@ -201,7 +201,7 @@ PolygonMap(map=county_polygons, id="cnty", variable="elevation",
 
 For point data, a separate variable can be defined as the variable that describes the size of the points.
 
-```{r,fig.height=3, fig.width=10,fig.align='center', message=F, warning=F,fig.cap="Modifying point size based on another variable"}
+```{r,dpi=300, fig.height=3, fig.width=10,fig.align='center', message=F, warning=F,fig.cap="Modifying point size based on another variable"}
 PointMap(coords=county_centroids, id="cnty", xcol="x_albers", ycol="y_albers", map_colors=wpal("betafish"),
          variable="elevation_range",legend_title = "Elevation Range",
          sizevar = "elevation", sizetitle = "Elevation", font_size = 6, 
@@ -231,7 +231,7 @@ PolygonMap(map=county_polygons,data=county_simulated,
            id="cnty", variable="var2", map_title="Simulated Variable 2")
 ```
 
-```{r, echo=F, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="Mapping two different variables from an external data frame"}
+```{r, echo=F, dpi=300, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="Mapping two different variables from an external data frame"}
 var1<-PolygonMap(map=county_polygons,data=county_simulated,font_size=9,
            id="cnty", variable="var1", map_title="Simulated Variable 1", return_objects = T, include_titles = T)$map
 var2<-PolygonMap(map=county_polygons,data=county_simulated,font_size=9,
@@ -251,7 +251,7 @@ Research on the color choices that underpin readable maps and graphics has provi
 
 
 <!-- Color Palette Examples -->
-```{r, echo=F, fig.height=2, fig.width=10, fig.align='center', message=F, warning=F}
+```{r, echo=F, dpi=300, fig.height=2, fig.width=10, fig.align='center', message=F, warning=F}
 seq<-PlotColors(wpal("cool_blue_jeans", 9), color_list_name="Example of Sequential palette",base_size = 6)+theme(axis.text = element_blank())
 div<-PlotColors(wpal("diverging_pink_black_blue", 9), color_list_name="Example of Diverging palette", base_size = 6)+theme(axis.text = element_blank())
 colors<-cowplot::plot_grid(seq,div, ncol=1, align="v")
@@ -260,7 +260,7 @@ colors
 
 The "ColorBrewer" project of Cynthia Brewer, available in R through the package **RColorBrewer**[19] contains a variety of color schemes used regularly within the mapping community. However, the sequential palettes presented in RColorBrewer often do not contain more than two or three colors, limiting the differentiation possible between data values. A member of the astronomy community, Dave Green, developed the "cubehelix" algorithm to differentiate star-brightness values from observations of the night sky. The "cubehelix" is a virtual corkscrew moving through a cube of red-green-blue color space on a trajectory from dark to light[20]. This function has been adapted for R in the **rje** package[21], where users can define the following variables in order to produce a variety of diferent color palettes moving from dark to light: (i) the number of rotations, (ii) how large the radius of the corkscrew is, and (iii) the saturation. The permutations for color palettes that can be created with this function is nearly endless. 
 
-```{r, echo=F, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F}
+```{r, echo=F, dpi=300, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F}
 library(RColorBrewer)
 brew<-PlotColors(brewer.pal(9,"Spectral"), color_list_name="Color Brewer Spectral Palette",base_size = 6)+theme(axis.text = element_blank())
 cube<-PlotColors(wpal("ld_reg1", 9), color_list_name="A Cubehelix Color Palette",base_size = 6)+theme(axis.text = element_blank())
@@ -272,12 +272,12 @@ colors
 Within the **MapSuite** library, a series of curated sequential and diverging palettes derived from the cubehelix algorithm are contained within the wpal function. The **MapSuite**'s "Woodson Palettes" are lists of color values that can be called upon by both the main mapping functions and any other function that accepts a list of colors in R. Using the MapSuite's wpal function, users can specify a number of colors that will be interpolated, as well as whether black will be included (if it exists in the color palette). If you wish to explore or view a specific Woodson Palette's default colors, the ViewPal function will plot the desired color ramp. The PlotColors function allows the plotting of any list of colors, including a modified Woodson Palette.
 
 
-```{r, echo=T,fig.height=1, fig.width=10, fig.align='center', message=F, warning=F}
+```{r, echo=T,dpi=300, fig.height=1, fig.width=10, fig.align='center', message=F, warning=F}
 ViewPal("seaglass",base_size=6)
 ```
 
 To use a Woodson Palette in reverse (re-ordered dark-to-light), the function rev() can be used sort the color pallette in reverse order. 
-```{r, echo=T,  fig.height=1, fig.width=10, fig.align='center', message=F, warning=F}
+```{r, echo=T,  dpi=300, fig.height=1, fig.width=10, fig.align='center', message=F, warning=F}
 more_colors<-rev(wpal("seaglass",n=12,noblack=T))
 PlotColors(more_colors, color_list_name="Reversed Ramp with More Colors",base_size = 6)
 ```
@@ -287,7 +287,7 @@ Our instinct to assign value judgments ("red is bad, blue is good") to color sca
 It is worth noting that the same color scale can look quite different based on the number of geometries or data points present-- while a color ramp that goes through many colors looks appropriate with large numbers of data points or geometries, too few can create a "chunky" or categorical look. In these circumstances, choosing a color palette with fewer colors may provide a more pleasing and readable map. To showcase the extent to which color and binning (converting a continuous variable to a categorical one) impact the visual appearance of data, the same data will be used in figures 9-12. 
 
 <!-- Examples of scary, non-scary palettes-->
-```{r, echo=F, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="The same data, represented using three different color schemes"}
+```{r, echo=F, dpi=300, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="The same data, represented using three different color schemes"}
 grid.newpage() # Starting a new page
 
 calm<-PolygonMap(map=colorado, id="cnty", data=county_simulated, variable="var3",legend_bar_length = unit(.5,"snpc"),legend_bar_width=unit(.02,"snpc"),legend_orientation = "vertical",
@@ -313,7 +313,7 @@ To explore these colors, and how they impact how data are portrayed, visit and e
 
 The default use of continuous color scales for numeric data is designed to minimize the visual bias that occurs from data classification into discrete groups, which can "reveal meaningful spatial trends or promote misleading interpretations" of the data[22]. Although different color schemes and ramps can emphasize or subdue patterns in the data, a continuous color scale that ranges through the minimum and maximum values is subject to one fewer source of bias-- the choice of what classification scheme to use.  Classifying or binning data has the danger of making values that are similar appear distant from one another due to proximity to the breaks values, and the size and divisions used to create data categories can dramatically change the visual appearance of the data.  
 
-```{r, echo=F, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="Two different binning methods"}
+```{r, echo=F, dpi=300, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="Two different binning methods"}
 quantile<-PolygonMap(map=colorado, 
                    id="cnty", 
                    data=colorado_data, 
@@ -347,7 +347,7 @@ print(pretty, vp = vplayout(1, 2))
 
 To define the minimum and maximum of the color scale separately from the minimum and maximum of the data variable you are mapping, a two-item vector (with a minimum and maximum) can be passed to the map_colors_limits parameter. For those who wish to highlight or emphasize some portion of the data without using binned categories, the parameter map_color_breaks allows users to change how the color ramp is applied to the range of the data. Note that this approach does not change the values, or the "truth" presented by the maps-- it simply changes how the colors are stretched across the minimum and maximum of the scale. However, these changes can dramatically change the _appearance_ of the data.
 
-```{r, echo=F, fig.height=6, fig.width=6, fig.align='center', message=F, warning=F, fig.cap="Changing how the colors are stretched across the data: (i) Evenly from the minimum to the maximum (top left), (ii) Artificially extending the range of the colors to 0-300, which is larger than the range of the data (top right), and (iii) Changing whether light or dark colors occupy more of the range of the data by shifting how the same colors are applied to the dataas in top left, or in a way where more dark or light colors cover the majority of the range (bottom)"}
+```{r, echo=F, dpi=300, fig.height=7, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="Changing how the colors are stretched across the data: (i) Evenly from the minimum to the maximum (top left), (ii) Artificially extending the range of the colors to 0-300, which is larger than the range of the data (top right), and (iii) Changing whether light or dark colors occupy more of the range of the data by shifting how the same colors are applied to the dataas in top left, or in a way where more dark or light colors cover the majority of the range (bottom)"}
 default<-PolygonMap(map=colorado, 
                    id="cnty", 
                    data=county_simulated, 
@@ -406,7 +406,7 @@ print(breaks2, vp = vplayout(2, 2))
 
 If there is a meaningful central point or cutoff in your data, it is possible to set the numeric value that will serve as the central color in a diverging scale:
 
-```{r, echo=F, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="Using two different numeric values (20 and 50) to center the color scheme on a meaingful value"}
+```{r, echo=F, dpi=300, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="Using two different numeric values (20 and 50) to center the color scheme on a meaingful value"}
 diverge_1<-PolygonMap(map=colorado, id="cnty", data=county_simulated,
                    map_subtitle="map_diverging_centervalue = 20",
                    variable="simulated",
@@ -435,23 +435,20 @@ print(diverge_2, vp = vplayout(1, 2))
 
 ```
 
-
- 
-
 ## Present many numbers in a small space: color-coded histograms
 
 While a good map can highlight spatial patterns, a histogram of the data being represented on the map illuminates the non-spatial trends in the distribution. As noted by Mark Monmonier, author of *How to Lie With Maps*,  a secondary graphic that shows the data distribution is an important aspect of revealing the data's truth. He notes that "if the map author is at all concerned with full disclosure, a ...histogram... is a must"[22].
 
 However, visually linking a histogram to a 2-dimensional spatial distribution can be difficult. To make the comparison of spatial distributions and densities, the function HistogramColorStats provides extra context by linking histogram color to choropleth color. In addition, references to properties of the distribution can be referenced in the form of colored lines that highlight data parameters. Users can pass a vector of statistical terms (currently supported are the mean, median, standard deviation, and any number of quantiles) to the function, which will provide even more visual cues to help understand the patterns in the data.
 
-```{r,fig.height=3, fig.width=10, fig.align='center', message=F, warning=F}
+```{r,dpi=300, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F}
 HistogramColorstats(datavector=county_simulated[["var2"]], color_ramp=wpal("seaglass"),
                     title="Simulated variable 2",dist_stats=c("mean",.25,.75))
 ```
 
 This functionality is integrated into the main mapping functions with the use of a 'histogram' parameter. When set to TRUE, the histogram will be placed at the bottom of the map, with the same limits and scaling as the map. To modify the histogram or its position, users can generate the histogram separately, using the function histogram_colorstats(), and modify the placements and formatting of the histogram as desired.
 
-```{r,fig.height=6, fig.width=6, fig.align='center', message=F, warning=F, fig.cap="A map with a histogram of the data distribution"}
+```{r,dpi=300, fig.height=6, fig.width=6, fig.align='center', message=F, warning=F, fig.cap="A map with a histogram of the data distribution"}
 RasterMap(coords=county_pixels[state_name=="Washington"], id="cnty", xcol="x_albers", ycol="y_albers",
           data=county_simulated, variable="var3", map_colors=wpal("seaglass"),
           legend_position="left", legend_orientation="vertical", font_size=8,
@@ -473,7 +470,7 @@ PolygonMap(map=colorado, id="cnty", data=county_simulated_time,
             legend_orientation= "vertical", map_subtitle="Year: ", map_title="Var 3")
 ```
 
-```{r, echo=F, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="Three plots with standardized color schemes output from visualizing a time series. For the purposes of this illustration, these plots have been aligned horizontally, but would usually appear in separate plots."}
+```{r, echo=F, dpi=300, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="Three plots with standardized color schemes output from visualizing a time series. For the purposes of this illustration, these plots have been aligned horizontally, but would usually appear in separate plots."}
 results<-PolygonMap(map=colorado, id="cnty", data=county_simulated_time,
             variable="var3", series_dimension="year",series_sequence=c(2000,2005,2009),
             map_colors = wpal("berries"), legend_position = "right",legend_orientation = "vertical",
@@ -568,6 +565,6 @@ A number of packages exist to visualize spatial data in R. The MapSuite package 
 
 
 ## Appendix 1: The Woodson Color Palettes
-```{r, echo=T, fig.height=7, fig.width=5, fig.align='center', message=F, warning=F}
+```{r, echo=T, dpi=300, fig.height=12, fig.width=10, fig.align='center', message=F, warning=F}
 ViewPal(color=NULL, n=9, base_size = 7, listcolors=F, n_per_page=9, labelcolors=F)
 ```
