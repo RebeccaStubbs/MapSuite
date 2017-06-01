@@ -140,7 +140,7 @@ PointMap(coords=wa_centroids,id="cnty", xcol="x_albers", ycol="y_albers",
          map_colors = "red", pointsize = 1, 
          outline = wa_polygons, outline_size = 1, outline_color = "black")
 ```
-```{r, echo=F, fig.height=1, fig.width=4.5, fig.align='center', message=F, warning=F,fig.cap="Changing basic map aesthetics and adding outline polygons"}
+```{r, echo=F, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F,fig.cap="Changing basic map aesthetics and adding outline polygons"}
 poly<-PolygonMap(map=wa_polygons, id="cnty",
          map_colors = "lightgreen", map_outline_color ="black",
          return_objects = T)
@@ -152,7 +152,7 @@ cowplot::plot_grid(poly$map, point$map, nrow=1, align="h")
 
 To achieve a stronger figure-ground effect where a certain area is visually emphasized, adding an outline of a different shape and color can be utlizied by passing a different SpatialPolygonsDataFrame to the outline parameter, or by passing only a subset of the SpatialPolygonsDataFrame used for the main map to the outline parameter.
 
-```{r,fig.height=1.5, fig.width=4, fig.align='center', message=F, warning=F,fig.cap="Fig 3: Using outlines to add emphasis"}
+```{r,fig.height=3, fig.width=10,fig.align='center', message=F, warning=F,fig.cap="Fig 3: Using outlines to add emphasis"}
 Okanagan<-wa_polygons[wa_polygons@data[["cnty"]]==2944,]
 PolygonMap(map=wa_polygons, id="cnty", map_colors = "lightblue", 
            outline = Okanagan, outline_size = 1, outline_color = "orange",
@@ -177,7 +177,7 @@ PolygonMap(map=county_polygons,
 ```{r, echo=F, results='hide', eval=T}
 county_polygons@data[,above_below:=ifelse(county_polygons@data[["elevation"]]>1000, "<1,000 ft",">1,000 ft")]
 ```
-```{r, echo=F, fig.height=1.5, fig.width=5, fig.align='center', message=F, warning=F,fig.cap="Mapping binned and categorical data"}
+```{r, echo=F, fig.height=3, fig.width=10,fig.align='center', message=F, warning=F,fig.cap="Mapping binned and categorical data"}
 continuous<-PolygonMap(map=county_polygons, id="cnty", variable="elevation", map_title="Mean Elevation", return_objects = T, font_size = 8)
 categorical<-PolygonMap(map=county_polygons, id="cnty", variable="above_below", legend_title = "Mean Elevation",return_objects = T, font_size = 8)
 
@@ -189,7 +189,7 @@ print(categorical$map, vp = vplayout(1, 2))
 
 Although providing a color range is not required (a default color scheme will portray the data), it is easy to change. It is also possible to label specific cut-points on the legend with values of interest, and modify font and legend properties. 
 
-```{r,fig.height=1.5, fig.width=5, fig.align='center', message=F, warning=F,fig.cap="Changing color schemes and legend properties"}
+```{r,fig.height=3, fig.width=10,fig.align='center', message=F, warning=F,fig.cap="Changing color schemes and legend properties"}
 PolygonMap(map=county_polygons, id="cnty", variable="elevation",
            map_colors=c("red","yellow","white","blue","violet"),
            map_title="United States", map_title_font_face = "bold", font_size = 8,
@@ -201,7 +201,7 @@ PolygonMap(map=county_polygons, id="cnty", variable="elevation",
 
 For point data, a separate variable can be defined as the variable that describes the size of the points.
 
-```{r,fig.height=1.5, fig.width=5, fig.align='center', message=F, warning=F,fig.cap="Modifying point size based on another variable"}
+```{r,fig.height=3, fig.width=10,fig.align='center', message=F, warning=F,fig.cap="Modifying point size based on another variable"}
 PointMap(coords=county_centroids, id="cnty", xcol="x_albers", ycol="y_albers", map_colors=wpal("betafish"),
          variable="elevation_range",legend_title = "Elevation Range",
          sizevar = "elevation", sizetitle = "Elevation", font_size = 6, 
@@ -224,6 +224,11 @@ An under-appreciated quirk of the SpatialPolygonsDataFrame data type is that the
 \end{center}
 \end{minipage}
 
+```{r, echo=F, fig.height=2, fig.width=4, fig.align='center', message=F, warning=F}
+library(imager)
+im <- load.image("C:/Users/stubbsrw/Documents/us_counties_stubbs_gitrepo/MapSuite/scrambled_poly.png")
+plot(im, main=NULL, xlab=NULL,ylab=NULL,axes=FALSE)
+```
 
 To prevent this, the MapPolygons, MapPoints, and MapRaster functions take external data sets as parameters, which can be joined onto the spatial data using a specified field present in both the spatial and tabular data. The merging of the external data and the spatial objects within the PolygonMap function are ensured to preserve the polygon-to-attribute relationships. The polygon object is "fortified" (converted from a SpatialPolygonsDataFrame object into a data.frame with coordinate locations for plotting) within the function, and the additional data set is merged on. This syntax makes it easy to switch between different variables that exist in an external data set.
 
