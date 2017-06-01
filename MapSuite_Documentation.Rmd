@@ -4,19 +4,12 @@ author: "Rebecca Stubbs"
 output:
   md_document:
     variant: markdown_github
-  html_document:
-    toc: yes
-    toc_depth: 4
-    toc_float: yes
-  pdf_document:
-    toc: yes
 classoption: landscape
 ---
 
 ```{r global_options, include=FALSE}
 knitr::opts_chunk$set(fig.pos = 'h')
 ```
-
 
 ```{r,echo=F,eval=TRUE,message=F, include=F}
 library(MapSuite)
@@ -53,7 +46,7 @@ county_polygons@data<-copy(data.table(county_polygons@data))
 
 ## Introduction
 
-The ability for scientists, students, and citizens to easily visualize and analyze spatial data is more crucial than ever. As the amount of freely available geo-referenced data continues to grow, an ever-increasing community is discovering and utilizing spatial information[1]. A host of commercial and open source software with point-and-click interfaces exist for spatial analysis and visualization-- from ESRI's software suite to QGIS, Google Maps and other online options[2]. For those who wish to move beyond the graphical user interface, open-source languages such as R and Python are no longer restricted to those with academic or computer science backgrounds. Massive online open courses, an extensive blogging community, and online forums such as StackExchange provide instruction and trouble-shooting help from any corner of the world. The barriers to a truly participatory geographic information science (GIS) community are being lowered. This explosion of free resources empowers citizen scientists, grassroots organizations, and institutions in low-resource settings to take advantage of the ever-growing library of open-source toolkits for data science. R, as an open-source programming language used extensively for data analysis and statistics, has a variety of tools designed for spatial analysis and visualization[3][4].
+The ability for scientists, students, and citizens to easily visualize and analyze spatial data is more crucial than ever. As the amount of freely available geo-referenced data continues to grow, an ever-increasing community is discovering and utilizing spatial information\[1\]. A host of commercial and open source software with point-and-click interfaces exist for spatial analysis and visualization-- from ESRI's software suite to QGIS, Google Maps and other online options[2]. For those who wish to move beyond the graphical user interface, open-source languages such as R and Python are no longer restricted to those with academic or computer science backgrounds. Massive online open courses, an extensive blogging community, and online forums such as StackExchange provide instruction and trouble-shooting help from any corner of the world. The barriers to a truly participatory geographic information science (GIS) community are being lowered. This explosion of free resources empowers citizen scientists, grassroots organizations, and institutions in low-resource settings to take advantage of the ever-growing library of open-source toolkits for data science. R, as an open-source programming language used extensively for data analysis and statistics, has a variety of tools designed for spatial analysis and visualization[3][4].
 
 Working with spatial data is not, however, straightforward. Full of idiosyncrasies such as varying data types, projections, and the threat of invalid geometries, there is an additional overhead to working with spatial data. This poses a challenge: how can users with less experience in programming and GIS be brought into the fold? The ability to present and visualize findings from any analysis is critical, and map-making has been shown to be a key tool. Empowered communities have the ability to present maps to decision makers, leading to policy changes[5]. 
 
@@ -523,7 +516,7 @@ A number of packages exist to visualize spatial data in R. The MapSuite package 
 
 # References
 
-[1]: R. Sieber. Public participation geographic information systems: A literature review and framework. Annals of the Association of American Geographers, 96(3):491-507, 2006. doi: 10.1111/j.1467-8306.2006. 00702.x.
+\[1\]: R. Sieber. Public participation geographic information systems: A literature review and framework. Annals of the Association of American Geographers, 96(3):491-507, 2006. doi: 10.1111/j.1467-8306.2006. 00702.x.
 
 [2]: S. Steiniger and E. Bocher. An overview on current free and open source desktop gis developments.International Journal of Geographical Information Science, 23(10):1345-1370, 2009. doi: 10.1080/13658810802634956.
 
