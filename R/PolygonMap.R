@@ -353,7 +353,7 @@ PolygonMap<-function(
       
       if (!is.null(pdf_path)){
         dev.off()
-        print("PDF ready to view.")
+        message("PDF ready to view.")
       }
       
     }
@@ -363,10 +363,19 @@ PolygonMap<-function(
   #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   } else {
     
+    
+    if(!is.null(legend_label_breaks)!=!is.null(legend_label_values)){
+      stop("You cannot have legend_label_breaks without legend_label_values and vice versa. Note: Use floor() and ceiling() instead of round() for custom values.")
+    }
+    if(!is.null(legend_label_breaks)&!is.null(legend_label_values)){
+      message("I see that you have specified legend label breaks and values-- Note: Use floor() and ceiling() instead of round() for custom values.")
+    }
+    
+    
     if (!is.data.table(map@data)){
       map@data<-copy(data.table(map@data))
       if (verbose){
-        print("The @data slot in the 'map' object provided was not a data.table. It has been converted to one within the function.")
+        message("The @data slot in the 'map' object provided was not a data.table. It has been converted to one within the function.")
       }
     }
    
@@ -382,7 +391,7 @@ PolygonMap<-function(
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   if(is.null(data)){ # If a 'data' object has NOT been passed to the function
-    if(verbose){print("Data object not provided, copying the data attributes of the map object")}
+    if(verbose){message("Data object not provided, copying the data attributes of the map object")}
     data<-copy(map@data)
     
     if(! variable %in% names(data)){
@@ -406,7 +415,7 @@ PolygonMap<-function(
     if(!is.data.table(data)){
       data<-copy(data.table(data))
       if(verbose){
-        print("The 'data' object provided was not a data.table. It has been converted to one within the function.")
+        message("The 'data' object provided was not a data.table. It has been converted to one within the function.")
       }
     }
     
@@ -455,7 +464,7 @@ if(!is.null(legend_label_breaks)){
       discrete_scale<-TRUE
       data[,variable:=as.factor(variable)]
       if(verbose){
-        print("The variable you specified is a character, not a factor. It has been convered to a factor. To order your levels, pass a correctly ordered factor to this function.")
+        message("The variable you specified is a character, not a factor. It has been convered to a factor. To order your levels, pass a correctly ordered factor to this function.")
       }  
     }else{
       discrete_scale<-FALSE
@@ -525,7 +534,7 @@ if(!is.null(legend_label_breaks)){
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Starting the Loop
     if (verbose){
-      print(paste0("Mapping ",map_title))
+      message(paste0("Mapping ",map_title))
     }
 
 ###########################################
@@ -582,7 +591,7 @@ if(!is.null(legend_label_breaks)){
 #####################
 # If Data is Numeric, find the appropriate scales
 #####################
-    
+      
 if(discrete_scale==F){ # If the data is numeric... 
       
 # DEFINING COLOR RAMP AESTHETICS
@@ -604,6 +613,12 @@ if(discrete_scale==F){ # If the data is numeric...
     maximum<-max(map[["variable"]],na.rm=T)
     minimum<-min(map[["variable"]],na.rm=T)
   }
+  if(!is.null(legend_label_breaks)&!is.null(legend_label_values)){
+    if(!is.null(map_colors_limits)){stop("You have specified a legend break system-- this overrides your min/max specified. Remove your map_colors_limits argument from the parameters.")}
+    if(verbose)(message("Setting min/max to legend label values-- use floor() and ceiling() instead of round!"))
+    minimum<-legend_label_breaks[1]
+    maximum<-legend_label_breaks[length(legend_label_breaks)]
+  }
 
 # Defining color breaks to make the correct Diverging centerpoint, if one was given, based on the min/max.
   if(!is.null(map_diverging_centervalue)){
@@ -616,7 +631,7 @@ if(discrete_scale==F){ # If the data is numeric...
         break_value<-(map_diverging_centervalue-minimum)/(maximum-minimum)
         map_colors_breaks<-c(0,break_value,1)
         if (verbose) {
-          print(paste0("Centering color ramp at ",map_diverging_centervalue,". Any other color breaks provided have been overridden."))
+          message(paste0("Centering color ramp at ",map_diverging_centervalue,". Any other color breaks provided have been overridden."))
         }
       }
 
@@ -705,7 +720,7 @@ if (discrete_scale==T){
       # This is in BETA and is not currently a funcitonality in v 1.1. 
       #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       if (histogram==TRUE){ # If you have specified that you do want the histogram at the bottom:          
-        print("making histogram")
+        message("making histogram")
           histo<-ggplot(na.omit(subset), aes(x=variable, fill=variable)) +
           geom_bar() + 
           labs(x=NULL, y=NULL) +
@@ -790,7 +805,7 @@ if (discrete_scale==T){
     
     if (!is.null(pdf_path)){
       dev.off()
-      print("PDF ready to view.")
+      message("PDF ready to view.")
     } #If you were writing this to a PDF, you can close it, and check it out!
 
     
