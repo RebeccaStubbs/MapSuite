@@ -259,7 +259,7 @@ Research on the color choices that underpin readable maps and graphics has provi
 
 <!-- Color Palette Examples -->
 ```{r, echo=F, dpi=1000, fig.height=2, fig.width=10, fig.align='center', message=F, warning=F}
-seq<-PlotColors(wpal("cool_blue_jeans", 9), color_list_name="Example of Sequential palette",base_size = 24)+theme(axis.text = element_blank())
+seq<-PlotColors(wpal("cool_blue_jeans", 9), color_list_name="Example of Sequential palette",base_size = 12)+theme(axis.text = element_blank())
 div<-PlotColors(wpal("diverging_pink_black_blue", 9), color_list_name="Example of Diverging palette", base_size = 12)+theme(axis.text = element_blank())
 colors<-cowplot::plot_grid(seq,div, ncol=1, align="v")
 colors
@@ -354,7 +354,7 @@ print(pretty, vp = vplayout(1, 2))
 
 To define the minimum and maximum of the color scale separately from the minimum and maximum of the data variable you are mapping, a two-item vector (with a minimum and maximum) can be passed to the map_colors_limits parameter. For those who wish to highlight or emphasize some portion of the data without using binned categories, the parameter map_color_breaks allows users to change how the color ramp is applied to the range of the data. Note that this approach does not change the values, or the "truth" presented by the maps-- it simply changes how the colors are stretched across the minimum and maximum of the scale. However, these changes can dramatically change the _appearance_ of the data.
 
-```{r, echo=F, dpi=1000, fig.height=7, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="Changing how the colors are stretched across the data: (i) Evenly from the minimum to the maximum (top left), (ii) Artificially extending the range of the colors to 0-300, which is larger than the range of the data (top right), and (iii) Changing whether light or dark colors occupy more of the range of the data by shifting how the same colors are applied to the dataas in top left, or in a way where more dark or light colors cover the majority of the range (bottom)"}
+```{r, echo=F, dpi=1000, fig.height=6, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="Changing how the colors are stretched across the data: (i) Evenly from the minimum to the maximum (top left), (ii) Artificially extending the range of the colors to 0-300, which is larger than the range of the data (top right), and (iii) Changing whether light or dark colors occupy more of the range of the data by shifting how the same colors are applied to the dataas in top left, or in a way where more dark or light colors cover the majority of the range (bottom)"}
 default<-PolygonMap(map=colorado, 
                    id="cnty", 
                    data=county_simulated, 
