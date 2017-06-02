@@ -10,7 +10,6 @@ Rebecca Stubbs
     -   [Present many numbers in a small space: color-coded histograms](#present-many-numbers-in-a-small-space-color-coded-histograms)
     -   [Encourage the eye to compare different pieces of data: visualizing by subgroup or time](#encourage-the-eye-to-compare-different-pieces-of-data-visualizing-by-subgroup-or-time)
     -   [Summary and further work](#summary-and-further-work)
--   [References](#references)
     -   [Appendix 1: The Woodson Color Palettes](#appendix-1-the-woodson-color-palettes)
 
 Woodson Mapping Suite
@@ -210,7 +209,7 @@ The "ColorBrewer" project of Cynthia Brewer, available in R through the package 
 Within the **MapSuite** library, a series of curated sequential and diverging palettes derived from the cubehelix algorithm are contained within the wpal function. The **MapSuite**'s "Woodson Palettes" are lists of color values that can be called upon by both the main mapping functions and any other function that accepts a list of colors in R. Using the MapSuite's wpal function, users can specify a number of colors that will be interpolated, as well as whether black will be included (if it exists in the color palette). If you wish to explore or view a specific Woodson Palette's default colors, the ViewPal function will plot the desired color ramp. The PlotColors function allows the plotting of any list of colors, including a modified Woodson Palette.
 
 ``` r
-ViewPal("seaglass",base_size=6)
+ViewPal("seaglass",base_size = 12)
 ```
 
     ## [1] "Plotting wpal color scheme seaglass"
@@ -221,7 +220,7 @@ To use a Woodson Palette in reverse (re-ordered dark-to-light), the function rev
 
 ``` r
 more_colors<-rev(wpal("seaglass",n=12,noblack=T))
-PlotColors(more_colors, color_list_name="Reversed Ramp with More Colors",base_size = 6)
+PlotColors(more_colors, color_list_name="Reversed Ramp with More Colors",base_size = 12)
 ```
 
 <img src="README_files/figure-markdown_github/unnamed-chunk-18-1.png" style="display: block; margin: auto;" />
@@ -342,9 +341,6 @@ Summary and further work
 
 A number of packages exist to visualize spatial data in R. The MapSuite package attempts to fill a niche that has the advantages of simplicity of use and graphic design, while remaining highly customizable for the more advanced user. Possible extensions and opportunities for future work on this package are the inclusion of line geometries, and the further development of functions and sensible default settings for legends that allow the stacking of map layers with even lower overhead. Interested users are invited to contribute to this effort on [GitHub](https:\github.com\RebeccaStubbs\MapSuite), where the full source code can be found.
 
-References
-==========
-
 1
 : R. Sieber. Public participation geographic information systems: A literature review and framework. Annals of the Association of American Geographers, 96(3):491-507, 2006. doi: 10.1111/j.1467-8306.2006. 00702.x.
 
@@ -415,9 +411,9 @@ Appendix 1: The Woodson Color Palettes
 --------------------------------------
 
 ``` r
-ViewPal(color=NULL, n=9, base_size = 7, listcolors=F, n_per_page=9, labelcolors=F)
+ViewPal(color=NULL, n=9, base_size = 12, listcolors=F, n_per_page=6, labelcolors=F)
 ```
 
     ## [1] "No color specified; plotting all colors"
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-29-1.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-2.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-3.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-4.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-5.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-6.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-7.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-8.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-9.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_github/unnamed-chunk-29-1.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-2.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-3.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-4.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-5.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-6.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-7.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-8.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-9.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-10.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-11.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-12.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-13.png" style="display: block; margin: auto;" />
