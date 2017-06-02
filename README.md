@@ -1,3 +1,18 @@
+MapSuite: An R Package for Thematic Maps
+================
+Rebecca Stubbs
+
+-   [Woodson Mapping Suite](#woodson-mapping-suite)
+    -   [Introduction](#introduction)
+    -   [Showing the data: plotting basic geometries and variables](#showing-the-data-plotting-basic-geometries-and-variables)
+    -   [Allow the programmer to think about substance rather than about methodology](#allow-the-programmer-to-think-about-substance-rather-than-about-methodology)
+    -   [Avoiding distoring what the data have to say](#avoiding-distoring-what-the-data-have-to-say)
+    -   [Present many numbers in a small space: color-coded histograms](#present-many-numbers-in-a-small-space-color-coded-histograms)
+    -   [Encourage the eye to compare different pieces of data: visualizing by subgroup or time](#encourage-the-eye-to-compare-different-pieces-of-data-visualizing-by-subgroup-or-time)
+    -   [Summary and further work](#summary-and-further-work)
+-   [References](#references)
+    -   [Appendix 1: The Woodson Color Palettes](#appendix-1-the-woodson-color-palettes)
+
 Woodson Mapping Suite
 =====================
 

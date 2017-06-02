@@ -2,11 +2,11 @@
 title: 'MapSuite: An R Package for Thematic Maps'
 author: "Rebecca Stubbs"
 output:
+  github_document:
+    toc: yes
+    toc_depth: 2
   md_document:
     variant: markdown_github
-  github_document:
-    toc: true
-    toc_depth: 2
 classoption: landscape
 ---
 
