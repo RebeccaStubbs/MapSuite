@@ -129,7 +129,7 @@ Although providing a color range is not required (a default color scheme will po
 ``` r
 PolygonMap(map=county_polygons, id="cnty", variable="elevation",
            map_colors=c("red","yellow","white","blue","violet"),
-           map_title="United States", map_title_font_face = "bold", font_size = 8,
+           map_title="United States", map_title_font_face = "bold", font_size = 12,
            map_subtitle ="Counties", font_family = "sans", 
            legend_title="Mean Elevation", legend_font_face = "italic", 
            legend_position = "right", legend_orientation="horizontal" ,
@@ -146,7 +146,7 @@ For point data, a separate variable can be defined as the variable that describe
 ``` r
 PointMap(coords=county_centroids, id="cnty", xcol="x_albers", ycol="y_albers", map_colors=wpal("betafish"),
          variable="elevation_range",legend_title = "Elevation Range",
-         sizevar = "elevation", sizetitle = "Elevation", font_size = 6, 
+         sizevar = "elevation", sizetitle = "Elevation", font_size = 12, 
          legend_position = "right", legend_orientation = "horizontal", legend_stacking="vertical")
 ```
 
@@ -263,7 +263,7 @@ This functionality is integrated into the main mapping functions with the use of
 ``` r
 RasterMap(coords=county_pixels[state_name=="Alaska"], id="cnty", xcol="x_albers", ycol="y_albers",
           data=county_simulated, variable="var3", map_colors=wpal("seaglass"),
-          legend_position="left", legend_orientation="vertical", font_size=8,
+          legend_position="left", legend_orientation="vertical", font_size=12,
           map_title="Simulated Data Distribution (Alaska)", legend_bar_length=unit(.5,"snpc"),
           histogram=T)
 ```

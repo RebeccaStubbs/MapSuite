@@ -182,8 +182,8 @@ PolygonMap(map=county_polygons,
 county_polygons@data[,above_below:=ifelse(county_polygons@data[["elevation"]]>1000, "<1,000 ft",">1,000 ft")]
 ```
 ```{r, echo=F, dpi=1000, fig.height=3, fig.width=10,fig.align='center', message=F, warning=F,fig.cap="Mapping binned and categorical data"}
-continuous<-PolygonMap(map=county_polygons, id="cnty", variable="elevation", map_title="Mean Elevation", return_objects = T, font_size = 8)
-categorical<-PolygonMap(map=county_polygons, id="cnty", variable="above_below", legend_title = "Mean Elevation",return_objects = T, font_size = 8)
+continuous<-PolygonMap(map=county_polygons, id="cnty", variable="elevation", map_title="Mean Elevation", return_objects = T, font_size=12)
+categorical<-PolygonMap(map=county_polygons, id="cnty", variable="above_below", legend_title = "Mean Elevation",return_objects = T, font_size=12)
 
 grid.newpage() # Starting a new page
 pushViewport(viewport(layout = grid.layout(1, 2)))
@@ -196,7 +196,7 @@ Although providing a color range is not required (a default color scheme will po
 ```{r,dpi=1000, fig.height=3, fig.width=10,fig.align='center', message=F, warning=F,fig.cap="Changing color schemes and legend properties"}
 PolygonMap(map=county_polygons, id="cnty", variable="elevation",
            map_colors=c("red","yellow","white","blue","violet"),
-           map_title="United States", map_title_font_face = "bold", font_size = 8,
+           map_title="United States", map_title_font_face = "bold", font_size = 12,
            map_subtitle ="Counties", font_family = "sans", 
            legend_title="Mean Elevation", legend_font_face = "italic", 
            legend_position = "right", legend_orientation="horizontal" ,
@@ -208,7 +208,7 @@ For point data, a separate variable can be defined as the variable that describe
 ```{r,dpi=1000, fig.height=3, fig.width=10,fig.align='center', message=F, warning=F,fig.cap="Modifying point size based on another variable"}
 PointMap(coords=county_centroids, id="cnty", xcol="x_albers", ycol="y_albers", map_colors=wpal("betafish"),
          variable="elevation_range",legend_title = "Elevation Range",
-         sizevar = "elevation", sizetitle = "Elevation", font_size = 6, 
+         sizevar = "elevation", sizetitle = "Elevation", font_size = 12, 
          legend_position = "right", legend_orientation = "horizontal", legend_stacking="vertical")
 ```
 
@@ -236,9 +236,9 @@ PolygonMap(map=county_polygons,data=county_simulated,
 ```
 
 ```{r, echo=F, dpi=1000, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="Mapping two different variables from an external data frame"}
-var1<-PolygonMap(map=county_polygons,data=county_simulated,font_size=9,
+var1<-PolygonMap(map=county_polygons,data=county_simulated,font_size=12,
            id="cnty", variable="var1", map_title="Simulated Variable 1", return_objects = T, include_titles = T)$map
-var2<-PolygonMap(map=county_polygons,data=county_simulated,font_size=9,
+var2<-PolygonMap(map=county_polygons,data=county_simulated,font_size=12,
            id="cnty", variable="var2", map_title="Simulated Variable 2",  return_objects = T, include_titles = T)$map
 grid.newpage() # Starting a new page
 pushViewport(viewport(layout = grid.layout(1, 2)))
@@ -323,7 +323,7 @@ quantile<-PolygonMap(map=colorado,
                    data=colorado_data, 
                    variable="simulated_categorical",
                    map_subtitle="Quantile Breaks",
-                   font_size=10,
+                   font_size=12,
                    legend_patch_height = 1,
                    map_colors = rev(wpal("parrotfish")),
                    legend_position = "left",
@@ -334,7 +334,7 @@ quantile<-PolygonMap(map=colorado,
 pretty<-PolygonMap(map=colorado, 
                    id="cnty", 
                    data=colorado_data,
-                   font_size=10,
+                   font_size=12,
                    legend_patch_height = 1,
                    variable="simulated_pretty",
                    map_subtitle="'Pretty' Breaks",
@@ -358,7 +358,7 @@ default<-PolygonMap(map=colorado,
                    variable="simulated",
                    legend_bar_width=unit(.02,"snpc"), 
                    map_subtitle="Default Settings",
-                   legend_bar_length=unit(.4,"snpc"), font_size=8,
+                   legend_bar_length=unit(.4,"snpc"), font_size=12,
                    map_colors = rev(wpal("parrotfish")),
                    legend_position = "left",
                    return_objects = T,
@@ -369,7 +369,7 @@ limits<-PolygonMap(map=colorado,
                    variable="simulated",
                    legend_bar_width=unit(.02,"snpc"), 
                    map_subtitle="Color Limits set c(0,300)",
-                   legend_bar_length=unit(.4,"snpc"), font_size=8,
+                   legend_bar_length=unit(.4,"snpc"), font_size=12,
                    map_colors = rev(wpal("parrotfish")),
                    map_colors_limits = c(0,300),
                    legend_position = "right",
@@ -381,7 +381,7 @@ breaks1<-PolygonMap(map=colorado,
                    variable="simulated",
                    map_subtitle="Color breaks c(0,.1,.9,1),",
                    legend_bar_width=unit(.02,"snpc"), 
-                   legend_bar_length=unit(.4,"snpc"), font_size=8,
+                   legend_bar_length=unit(.4,"snpc"), font_size=12,
                    map_colors_breaks = c(0,.1,.9,1),
                    map_colors = rev(wpal("parrotfish")),
                    legend_position = "left",
@@ -393,7 +393,7 @@ breaks2<-PolygonMap(map=colorado,
                    map_subtitle="Color breaks c(0,.5,.6,1)",
                    variable="simulated",
                    legend_bar_width=unit(.02,"snpc"), 
-                   legend_bar_length=unit(.4,"snpc"), font_size=8,
+                   legend_bar_length=unit(.4,"snpc"), font_size=12,
                    map_colors_breaks = c(0,.5,.6,1),
                    map_colors = rev(wpal("parrotfish")),
                    legend_position = "right",
@@ -416,7 +416,7 @@ diverge_1<-PolygonMap(map=colorado, id="cnty", data=county_simulated,
                    variable="simulated",
                    map_diverging_centervalue = 20,
                    legend_bar_width=unit(.02,"snpc"),
-                   legend_bar_length=unit(.4,"snpc"), font_size=8,
+                   legend_bar_length=unit(.4,"snpc"), font_size=12,
                    map_colors = wpal("diverging_tan_green_blue"),
                    legend_position = "left",
                    return_objects = T,
@@ -427,7 +427,7 @@ diverge_2<-PolygonMap(map=colorado, id="cnty", data=county_simulated,
                    variable="simulated",
                    map_colors=wpal("diverging_tan_green_blue"),
                    legend_bar_width=unit(.02,"snpc"),
-                   legend_bar_length=unit(.4,"snpc"), font_size=8,
+                   legend_bar_length=unit(.4,"snpc"), font_size=12,
                    map_colors_breaks = c(0,.5,.6,1),
                    legend_position = "right",
                    return_objects = T,
@@ -455,7 +455,7 @@ This functionality is integrated into the main mapping functions with the use of
 ```{r,dpi=1000, fig.height=4, fig.width=4, fig.align='center', message=F, warning=F, fig.cap="A map with a histogram of the data distribution"}
 RasterMap(coords=county_pixels[state_name=="Alaska"], id="cnty", xcol="x_albers", ycol="y_albers",
           data=county_simulated, variable="var3", map_colors=wpal("seaglass"),
-          legend_position="left", legend_orientation="vertical", font_size=8,
+          legend_position="left", legend_orientation="vertical", font_size=12,
           map_title="Simulated Data Distribution (Alaska)", legend_bar_length=unit(.5,"snpc"),
           histogram=T)
 ```
@@ -478,7 +478,7 @@ PolygonMap(map=colorado, id="cnty", data=county_simulated_time,
 results<-PolygonMap(map=colorado, id="cnty", data=county_simulated_time,
             variable="var3", series_dimension="year",series_sequence=c(2000,2005,2009),
             map_colors = wpal("berries"), legend_position = "right",legend_orientation = "vertical",
-            map_subtitle="Year: ", map_title="Var 3",font_size=8,return_objects = T,include_titles=T)
+            map_subtitle="Year: ", map_title="Var 3",font_size=12,return_objects = T,include_titles=T)
 
 grid.newpage()
 pushViewport(viewport(layout = grid.layout(1, 3)))
