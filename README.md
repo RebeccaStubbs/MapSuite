@@ -85,7 +85,7 @@ PointMap(coords=wa_centroids, id="cnty", xcol="x_albers", ycol="y_albers")
 RasterMap(coords=wa_pixels, id="cnty", xcol="x_albers", ycol="y_albers")
 ```
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-3-1.svg" alt="Mapping Point, Polygon, and Raster Data"  />
+<img src="README_files/figure-markdown_github/unnamed-chunk-3-1.png" alt="Mapping Point, Polygon, and Raster Data"  />
 <p class="caption">
 Mapping Point, Polygon, and Raster Data
 </p>
@@ -100,7 +100,7 @@ PointMap(coords=wa_centroids,id="cnty", xcol="x_albers", ycol="y_albers",
          outline = wa_polygons, outline_size = 1, outline_color = "black")
 ```
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-5-1.svg" alt="Changing basic map aesthetics and adding outline polygons"  />
+<img src="README_files/figure-markdown_github/unnamed-chunk-5-1.png" alt="Changing basic map aesthetics and adding outline polygons"  />
 <p class="caption">
 Changing basic map aesthetics and adding outline polygons
 </p>
@@ -114,7 +114,7 @@ PolygonMap(map=wa_polygons, id="cnty", map_colors = "lightblue",
            map_title="Okanagan County")
 ```
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-6-1.svg" alt="Fig 3: Using outlines to add emphasis"  />
+<img src="README_files/figure-markdown_github/unnamed-chunk-6-1.png" alt="Fig 3: Using outlines to add emphasis"  />
 <p class="caption">
 Fig 3: Using outlines to add emphasis
 </p>
@@ -133,7 +133,7 @@ PolygonMap(map=county_polygons,
            legend_title = "Mean Elevation")
 ```
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-9-1.svg" alt="Mapping binned and categorical data"  />
+<img src="README_files/figure-markdown_github/unnamed-chunk-9-1.png" alt="Mapping binned and categorical data"  />
 <p class="caption">
 Mapping binned and categorical data
 </p>
@@ -150,7 +150,7 @@ PolygonMap(map=county_polygons, id="cnty", variable="elevation",
            legend_label_values = c("Sea Level","1 mile high"),legend_label_breaks =c(10,3250))
 ```
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-10-1.svg" alt="Changing color schemes and legend properties"  />
+<img src="README_files/figure-markdown_github/unnamed-chunk-10-1.png" alt="Changing color schemes and legend properties"  />
 <p class="caption">
 Changing color schemes and legend properties
 </p>
@@ -164,7 +164,7 @@ PointMap(coords=county_centroids, id="cnty", xcol="x_albers", ycol="y_albers", m
          legend_position = "right", legend_orientation = "horizontal", legend_stacking="vertical")
 ```
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-11-1.svg" alt="Modifying point size based on another variable"  />
+<img src="README_files/figure-markdown_github/unnamed-chunk-11-1.png" alt="Modifying point size based on another variable"  />
 <p class="caption">
 Modifying point size based on another variable
 </p>
@@ -176,7 +176,7 @@ What if the variable you wish to plot is not already in same data object as the 
 
 An under-appreciated quirk of the SpatialPolygonsDataFrame data type is that the geometry slot (@polygons) is related to the attributes (@data) by a shared ordering, where the first item in the @polygons slot has the attributes of the first item in the @data slot. If an R user wishes to map a variable not yet in the @data slot, the temptation is to use the merge() function to join the two data sets and carry on with plotting your spatial data. However, this approach is dangerous- unbeknownst to many, the merge() function re-orders the resulting data frame by the ID fields used to join the two data sets. This can lead to maps that look plausible (there are data values and attributes for each polygon), but the ordering of the @data slot no longer matches with the @polygons, leading to a map where attributes are mismatched with their geometries.
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-12-1.svg" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_github/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
 
 To prevent this, the MapPolygons, MapPoints, and MapRaster functions take external data sets as parameters, which can be joined onto the spatial data using a specified field present in both the spatial and tabular data. The merging of the external data and the spatial objects within the PolygonMap function are ensured to preserve the polygon-to-attribute relationships. The polygon object is "fortified" (converted from a SpatialPolygonsDataFrame object into a data.frame with coordinate locations for plotting) within the function, and the additional data set is merged on. This syntax makes it easy to switch between different variables that exist in an external data set.
 
@@ -187,7 +187,7 @@ PolygonMap(map=county_polygons,data=county_simulated,
            id="cnty", variable="var2", map_title="Simulated Variable 2")
 ```
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-14-1.svg" alt="Mapping two different variables from an external data frame"  />
+<img src="README_files/figure-markdown_github/unnamed-chunk-14-1.png" alt="Mapping two different variables from an external data frame"  />
 <p class="caption">
 Mapping two different variables from an external data frame
 </p>
@@ -200,11 +200,11 @@ The hue (pigment), saturation (intensity), and value (darkness) chosen to portra
 Research on the color choices that underpin readable maps and graphics has provided nuanced insight towards what kind of color palettes are most effective for representing numeric or sequential data. Broadly, three main categories of color scale exist: sequential, diverging, and categorical. Sequential palettes move through at least two colors, often going from light-to-dark (or vice versa). A diverging scheme passes through at least three colors, as two colors "diverge" from a shared middle ground. Categorical color schemes have no trajectory-- and are often chosen to be dissimilar from one another such that the reader can easily tell the difference between two categories. Broadly, sequential color schemes are used when the entire range of the data is important, but there is no central value with special significance that serves as a frame of reference. In contrast, diverging color schemes are recommended when the data have a meaningful central value that can be used as a frame of reference. This can be either a specific cutoff based on knowledge of values of relevance (such as values above and below 0, or a certain threshold), or based some parameter of the data (for example, mapping Z-scores that diverge from 0). One special case of the diverging color scheme is the "spectral scheme," alternatatively known as the "rainbow scheme," that passed through the full (or modified) color space of red-orange-yellow-green-blue-indigo-violet. Although some researchers argue against this rainbow color scheme\[17\], others have advocated its use in specific scenarios, such as the mapping of mortality rates, where map readers could easily differentiate between the low values colored in blue, and the higher values coded in red\[18\].
 
 <!-- Color Palette Examples -->
-<img src="README_files/figure-markdown_github/unnamed-chunk-15-1.svg" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_github/unnamed-chunk-15-1.png" style="display: block; margin: auto;" />
 
 The "ColorBrewer" project of Cynthia Brewer, available in R through the package **RColorBrewer**\[19\] contains a variety of color schemes used regularly within the mapping community. However, the sequential palettes presented in RColorBrewer often do not contain more than two or three colors, limiting the differentiation possible between data values. A member of the astronomy community, Dave Green, developed the "cubehelix" algorithm to differentiate star-brightness values from observations of the night sky. The "cubehelix" is a virtual corkscrew moving through a cube of red-green-blue color space on a trajectory from dark to light\[20\]. This function has been adapted for R in the **rje** package\[21\], where users can define the following variables in order to produce a variety of diferent color palettes moving from dark to light: (i) the number of rotations, (ii) how large the radius of the corkscrew is, and (iii) the saturation. The permutations for color palettes that can be created with this function is nearly endless.
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-16-1.svg" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_github/unnamed-chunk-16-1.png" style="display: block; margin: auto;" />
 
 Within the **MapSuite** library, a series of curated sequential and diverging palettes derived from the cubehelix algorithm are contained within the wpal function. The **MapSuite**'s "Woodson Palettes" are lists of color values that can be called upon by both the main mapping functions and any other function that accepts a list of colors in R. Using the MapSuite's wpal function, users can specify a number of colors that will be interpolated, as well as whether black will be included (if it exists in the color palette). If you wish to explore or view a specific Woodson Palette's default colors, the ViewPal function will plot the desired color ramp. The PlotColors function allows the plotting of any list of colors, including a modified Woodson Palette.
 
@@ -214,7 +214,7 @@ ViewPal("seaglass",base_size = 12)
 
     ## [1] "Plotting wpal color scheme seaglass"
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-17-1.svg" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_github/unnamed-chunk-17-1.png" style="display: block; margin: auto;" />
 
 To use a Woodson Palette in reverse (re-ordered dark-to-light), the function rev() can be used sort the color pallette in reverse order.
 
@@ -223,14 +223,14 @@ more_colors<-rev(wpal("seaglass",n=12,noblack=T))
 PlotColors(more_colors, color_list_name="Reversed Ramp with More Colors",base_size = 12)
 ```
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-18-1.svg" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_github/unnamed-chunk-18-1.png" style="display: block; margin: auto;" />
 
 Our instinct to assign value judgments ("red is bad, blue is good") to color scales is simultaneously what makes them effective and conversely problematic. While there are some variables that can be clearly discerned as favorable and non-favorable (like mortality rates), visualizing quantities like the proportion of people belonging to a minority racial group on a similar color scale is far from appropriate. When visualizing a large quantity of data, where subtle spatial differences should be clear to the viewer, a diverging color palette that moves through three colors tends to add more clarity and visual precision than a sequential palette moving through only two. As such, there is the temptation to use diverging colors such as the spectral color scheme to represent data that may not have a meaningful central value, and may not have a clear "good" and "bad" connotation. For this reason, making color palettes based on a cubehelix color scheme that move from light to dark, rather than from a "good" color to a "bad" color, could serve an important purpose in visualizing data in social sciences. The default color scheme (called "earth"), moves in a sequence (yellow, blue, green, brown, purple, then black) designed to provide value differentiation without a moral or emotional value judgment. These scales, moving from light to dark, will also preserve the relationships between data values and pigment value, even when printed in black and white, and when viewed by the colorblind.
 
 It is worth noting that the same color scale can look quite different based on the number of geometries or data points present-- while a color ramp that goes through many colors looks appropriate with large numbers of data points or geometries, too few can create a "chunky" or categorical look. In these circumstances, choosing a color palette with fewer colors may provide a more pleasing and readable map. To showcase the extent to which color and binning (converting a continuous variable to a categorical one) impact the visual appearance of data, the same data will be used in figures 9-12.
 
 <!-- Examples of scary, non-scary palettes-->
-<img src="README_files/figure-markdown_github/unnamed-chunk-19-1.svg" alt="The same data, represented using three different color schemes"  />
+<img src="README_files/figure-markdown_github/unnamed-chunk-19-1.png" alt="The same data, represented using three different color schemes"  />
 <p class="caption">
 The same data, represented using three different color schemes
 </p>
@@ -239,21 +239,21 @@ To explore these colors, and how they impact how data are portrayed, visit and e
 
 The default use of continuous color scales for numeric data is designed to minimize the visual bias that occurs from data classification into discrete groups, which can "reveal meaningful spatial trends or promote misleading interpretations" of the data\[22\]. Although different color schemes and ramps can emphasize or subdue patterns in the data, a continuous color scale that ranges through the minimum and maximum values is subject to one fewer source of bias-- the choice of what classification scheme to use. Classifying or binning data has the danger of making values that are similar appear distant from one another due to proximity to the breaks values, and the size and divisions used to create data categories can dramatically change the visual appearance of the data.
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-20-1.svg" alt="Two different binning methods"  />
+<img src="README_files/figure-markdown_github/unnamed-chunk-20-1.png" alt="Two different binning methods"  />
 <p class="caption">
 Two different binning methods
 </p>
 
 To define the minimum and maximum of the color scale separately from the minimum and maximum of the data variable you are mapping, a two-item vector (with a minimum and maximum) can be passed to the map\_colors\_limits parameter. For those who wish to highlight or emphasize some portion of the data without using binned categories, the parameter map\_color\_breaks allows users to change how the color ramp is applied to the range of the data. Note that this approach does not change the values, or the "truth" presented by the maps-- it simply changes how the colors are stretched across the minimum and maximum of the scale. However, these changes can dramatically change the *appearance* of the data.
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-21-1.svg" alt="Changing how the colors are stretched across the data: (i) Evenly from the minimum to the maximum (top left), (ii) Artificially extending the range of the colors to 0-300, which is larger than the range of the data (top right), and (iii) Changing whether light or dark colors occupy more of the range of the data by shifting how the same colors are applied to the dataas in top left, or in a way where more dark or light colors cover the majority of the range (bottom)"  />
+<img src="README_files/figure-markdown_github/unnamed-chunk-21-1.png" alt="Changing how the colors are stretched across the data: (i) Evenly from the minimum to the maximum (top left), (ii) Artificially extending the range of the colors to 0-300, which is larger than the range of the data (top right), and (iii) Changing whether light or dark colors occupy more of the range of the data by shifting how the same colors are applied to the dataas in top left, or in a way where more dark or light colors cover the majority of the range (bottom)"  />
 <p class="caption">
 Changing how the colors are stretched across the data: (i) Evenly from the minimum to the maximum (top left), (ii) Artificially extending the range of the colors to 0-300, which is larger than the range of the data (top right), and (iii) Changing whether light or dark colors occupy more of the range of the data by shifting how the same colors are applied to the dataas in top left, or in a way where more dark or light colors cover the majority of the range (bottom)
 </p>
 
 If there is a meaningful central point or cutoff in your data, it is possible to set the numeric value that will serve as the central color in a diverging scale:
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-22-1.svg" alt="Using two different numeric values (20 and 50) to center the color scheme on a meaingful value"  />
+<img src="README_files/figure-markdown_github/unnamed-chunk-22-1.png" alt="Using two different numeric values (20 and 50) to center the color scheme on a meaingful value"  />
 <p class="caption">
 Using two different numeric values (20 and 50) to center the color scheme on a meaingful value
 </p>
@@ -270,7 +270,7 @@ HistogramColorstats(datavector=county_simulated[["var2"]], color_ramp=wpal("seag
                     title="Simulated variable 2",dist_stats=c("mean",.25,.75))
 ```
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-23-1.svg" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_github/unnamed-chunk-23-1.png" style="display: block; margin: auto;" />
 
 This functionality is integrated into the main mapping functions with the use of a 'histogram' parameter. When set to TRUE, the histogram will be placed at the bottom of the map, with the same limits and scaling as the map. To modify the histogram or its position, users can generate the histogram separately, using the function histogram\_colorstats(), and modify the placements and formatting of the histogram as desired.
 
@@ -282,7 +282,7 @@ RasterMap(coords=county_pixels[state_name=="Alaska"], id="cnty", xcol="x_albers"
           histogram=T)
 ```
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-24-1.svg" alt="A map with a histogram of the data distribution"  />
+<img src="README_files/figure-markdown_github/unnamed-chunk-24-1.png" alt="A map with a histogram of the data distribution"  />
 <p class="caption">
 A map with a histogram of the data distribution
 </p>
@@ -301,7 +301,7 @@ PolygonMap(map=colorado, id="cnty", data=county_simulated_time,
             legend_orientation= "vertical", map_subtitle="Year: ", map_title="Var 3")
 ```
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-26-1.svg" alt="Three plots with standardized color schemes output from visualizing a time series. For the purposes of this illustration, these plots have been aligned horizontally, but would usually appear in separate plots."  />
+<img src="README_files/figure-markdown_github/unnamed-chunk-26-1.png" alt="Three plots with standardized color schemes output from visualizing a time series. For the purposes of this illustration, these plots have been aligned horizontally, but would usually appear in separate plots."  />
 <p class="caption">
 Three plots with standardized color schemes output from visualizing a time series. For the purposes of this illustration, these plots have been aligned horizontally, but would usually appear in separate plots.
 </p>
@@ -314,8 +314,8 @@ for(a in ages){
     PolygonMap(map=county_polygons, id="cnty", data=county_simulated_time[age==a&sex==s],
                variable="var3", series_dimension="year",
                map_subtitle="Year: ", pdf_path = paste0("var3",a,s,".pdf"))
-  ,dev='svg'}
-,dev='svg'}
+  }
+}
 ```
 
 To generate a series of complex plots in which some or all of the variables change over time or another dimension, a loop can be constructed to generate plots based on each subset of the data, combined with other map elements, such as a constant background map.
@@ -333,7 +333,7 @@ for(y in county_simulated$year){
 
   grid.newpage()
   print(map, vp = vplayout(1, 1)); print(legends, vp = vplayout(1, 2))
-,dev='svg'}
+}
 ```
 
 Summary and further work
@@ -416,4 +416,4 @@ ViewPal(color=NULL, n=9, base_size = 12, listcolors=F, n_per_page=6, labelcolors
 
     ## [1] "No color specified; plotting all colors"
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-29-1.svg" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-2.svg" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-3.svg" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-4.svg" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-5.svg" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-6.svg" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-7.svg" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-8.svg" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-9.svg" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-10.svg" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-11.svg" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-12.svg" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-13.svg" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_github/unnamed-chunk-29-1.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-2.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-3.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-4.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-5.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-6.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-7.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-8.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-9.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-10.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-11.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-12.png" style="display: block; margin: auto;" /><img src="README_files/figure-markdown_github/unnamed-chunk-29-13.png" style="display: block; margin: auto;" />

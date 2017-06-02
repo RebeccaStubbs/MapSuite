@@ -17,13 +17,13 @@ classoption: landscape
 
 **MapSuite** is an R package that streamlines the process for making maps of point, polygon, and raster data using the foundation of the ggplot2 graphics library. This paper describes a series of functions designed to facilitate mapping spatial data, from simple representations of the geometries to visualizing a variables over a series, such as time or data subgroup. Also described is how the outputs of these functions can be used to stack geospatial data layers, generating sophisticated maps in R that previously were relegated to lengthy code or desktop mapping software.
 
-```{r global_options, include=FALSE,dev='svg'}
+```{r global_options, include=FALSE}
 knitr::opts_chunk$set(fig.pos = 'h')
 knitr::opts_chunk$set(fig.width = 10)
 knitr::opts_chunk$set(dpi=1000, fig.height = 3)
 ```
 
-```{r,echo=F,eval=TRUE,message=F, include=F,dev='svg'}
+```{r,echo=F,eval=TRUE,message=F, include=F}
 library(MapSuite)
 library(xtable)
 library(classInt)
@@ -119,12 +119,12 @@ The required inputs to each of the main functions (PolygonMap, PointMap, and Ras
 
 By default, the functions will create maps with gray shapes, as could be used for a background map or preliminary data exploration. 
 
-```{r, results='hide', eval=F,dev='svg'}
+```{r, results='hide', eval=F}
 PolygonMap(map=wa_polygons, id="cnty")
 PointMap(coords=wa_centroids, id="cnty", xcol="x_albers", ycol="y_albers")
 RasterMap(coords=wa_pixels, id="cnty", xcol="x_albers", ycol="y_albers")
 ```
-```{r, echo=F, dpi=1000, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F,fig.cap="Mapping Point, Polygon, and Raster Data",dev='svg'}
+```{r, echo=F, dpi=1000, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F,fig.cap="Mapping Point, Polygon, and Raster Data"}
 poly<-PolygonMap(map=wa_polygons,
            id="cnty",
            return_objects = T)
@@ -140,14 +140,14 @@ cowplot::plot_grid(poly$map, point$map, raster$map, labels = c("Polygon", "Polyg
 
 By adding optional parameters, various map aesthetics can be changed. The colors of the map (fill and outline in the case of polygons, fill alone in the case of points and rasters) can be modified. An outline layer (of class SpatialPolygons) that will lie atop your main map for context can be added and formatted. 
 
-```{r, results='hide', eval=F,dev='svg'}
+```{r, results='hide', eval=F}
 PolygonMap(map=wa_polygons, id="cnty", map_colors = "lightgreen", 
            map_outline_color ="black")
 PointMap(coords=wa_centroids,id="cnty", xcol="x_albers", ycol="y_albers",
          map_colors = "red", pointsize = 1, 
          outline = wa_polygons, outline_size = 1, outline_color = "black")
 ```
-```{r, echo=F, dpi=1000, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F,fig.cap="Changing basic map aesthetics and adding outline polygons",dev='svg'}
+```{r, echo=F, dpi=1000, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F,fig.cap="Changing basic map aesthetics and adding outline polygons"}
 poly<-PolygonMap(map=wa_polygons, id="cnty",
          map_colors = "lightgreen", map_outline_color ="black",
          return_objects = T)
@@ -159,7 +159,7 @@ cowplot::plot_grid(poly$map, point$map, nrow=1, align="h")
 
 To achieve a stronger figure-ground effect where a certain area is visually emphasized, adding an outline of a different shape and color can be utlizied by passing a different SpatialPolygonsDataFrame to the outline parameter, or by passing only a subset of the SpatialPolygonsDataFrame used for the main map to the outline parameter.
 
-```{r,dpi=1000, fig.height=3, fig.width=10,fig.align='center', message=F, warning=F,fig.cap="Fig 3: Using outlines to add emphasis",dev='svg'}
+```{r,dpi=1000, fig.height=3, fig.width=10,fig.align='center', message=F, warning=F,fig.cap="Fig 3: Using outlines to add emphasis"}
 Okanagan<-wa_polygons[wa_polygons@data[["cnty"]]==2944,]
 PolygonMap(map=wa_polygons, id="cnty", map_colors = "lightblue", 
            outline = Okanagan, outline_size = 1, outline_color = "orange",
@@ -170,7 +170,7 @@ PolygonMap(map=wa_polygons, id="cnty", map_colors = "lightblue",
 
 Mapping a variable within the data attributes of the spatial object (within the data.frame that serves as the coordinates for the Point and Raster functions or within the @data slot of the SpatialPolygonsDataFrame in the PolygonMap function) is possible by adding a "variable" parameter. This variable can either be numeric or categorical in nature. 
 
-```{r, results='hide', eval=F,dev='svg'}
+```{r, results='hide', eval=F}
 PolygonMap(map=county_polygons, 
            id="cnty", variable="elevation", 
            map_title="Mean Elevation")
@@ -181,10 +181,10 @@ PolygonMap(map=county_polygons,
            id="cnty", variable="above_below", 
            legend_title = "Mean Elevation")
 ```
-```{r, echo=F, results='hide', eval=T,dev='svg'}
+```{r, echo=F, results='hide', eval=T}
 county_polygons@data[,above_below:=ifelse(county_polygons@data[["elevation"]]>1000, "<1,000 ft",">1,000 ft")]
 ```
-```{r, echo=F, dpi=1000, fig.height=3, fig.width=10,fig.align='center', message=F, warning=F,fig.cap="Mapping binned and categorical data",dev='svg'}
+```{r, echo=F, dpi=1000, fig.height=3, fig.width=10,fig.align='center', message=F, warning=F,fig.cap="Mapping binned and categorical data"}
 continuous<-PolygonMap(map=county_polygons, id="cnty", variable="elevation", map_title="Mean Elevation", return_objects = T, font_size=12)
 categorical<-PolygonMap(map=county_polygons, id="cnty", variable="above_below", legend_title = "Mean Elevation",return_objects = T, font_size=12)
 
@@ -196,7 +196,7 @@ print(categorical$map, vp = vplayout(1, 2))
 
 Although providing a color range is not required (a default color scheme will portray the data), it is easy to change. It is also possible to label specific cut-points on the legend with values of interest, and modify font and legend properties. 
 
-```{r,dpi=1000, fig.height=3, fig.width=10,fig.align='center', message=F, warning=F,fig.cap="Changing color schemes and legend properties",dev='svg'}
+```{r,dpi=1000, fig.height=3, fig.width=10,fig.align='center', message=F, warning=F,fig.cap="Changing color schemes and legend properties"}
 PolygonMap(map=county_polygons, id="cnty", variable="elevation",
            map_colors=c("red","yellow","white","blue","violet"),
            map_title="United States", map_title_font_face = "bold", font_size = 12,
@@ -208,7 +208,7 @@ PolygonMap(map=county_polygons, id="cnty", variable="elevation",
 
 For point data, a separate variable can be defined as the variable that describes the size of the points.
 
-```{r,dpi=1000, fig.height=3, fig.width=10,fig.align='center', message=F, warning=F,fig.cap="Modifying point size based on another variable",dev='svg'}
+```{r,dpi=1000, fig.height=3, fig.width=10,fig.align='center', message=F, warning=F,fig.cap="Modifying point size based on another variable"}
 PointMap(coords=county_centroids, id="cnty", xcol="x_albers", ycol="y_albers", map_colors=wpal("betafish"),
          variable="elevation_range",legend_title = "Elevation Range",
          sizevar = "elevation", sizetitle = "Elevation", font_size = 12, 
@@ -223,7 +223,7 @@ What if the variable you wish to plot is not already in same data object as the 
 
 An under-appreciated quirk of the SpatialPolygonsDataFrame data type is that the geometry slot (@polygons) is related to the attributes (@data) by a shared ordering, where the first item in the @polygons slot has the attributes of the first item in the @data slot. If an R user wishes to map a variable not yet in the @data slot, the temptation is to use the merge() function to join the two data sets and carry on with plotting your spatial data. However, this approach is dangerous- unbeknownst to many, the merge() function re-orders the resulting data frame by the ID fields used to join the two data sets. This can lead to maps that look plausible (there are data values and attributes for each polygon), but the ordering of the @data slot no longer matches with the @polygons, leading to a map where attributes are mismatched with their geometries.
 
-```{r, echo=F, fig.align='center', fig.width=10, fig.height=8, message=F, warning=F,dev='svg'}
+```{r, echo=F, fig.align='center', fig.width=10, fig.height=8, message=F, warning=F}
 library(imager)
 im <- load.image("C:/Users/stubbsrw/Documents/us_counties_stubbs_gitrepo/MapSuite/scrambled_poly.png")
 plot(im, main=NULL, xlab=NULL,ylab=NULL,axes=FALSE)
@@ -231,14 +231,14 @@ plot(im, main=NULL, xlab=NULL,ylab=NULL,axes=FALSE)
 
 To prevent this, the MapPolygons, MapPoints, and MapRaster functions take external data sets as parameters, which can be joined onto the spatial data using a specified field present in both the spatial and tabular data. The merging of the external data and the spatial objects within the PolygonMap function are ensured to preserve the polygon-to-attribute relationships. The polygon object is "fortified" (converted from a SpatialPolygonsDataFrame object into a data.frame with coordinate locations for plotting) within the function, and the additional data set is merged on. This syntax makes it easy to switch between different variables that exist in an external data set.
 
-```{r,results="hide",eval=F,dev='svg'}
+```{r,results="hide",eval=F}
 PolygonMap(map=county_polygons,data=county_simulated,
            id="cnty", variable="var1", map_title="Simulated Variable 1")
 PolygonMap(map=county_polygons,data=county_simulated,
            id="cnty", variable="var2", map_title="Simulated Variable 2")
 ```
 
-```{r, echo=F, dpi=1000, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="Mapping two different variables from an external data frame",dev='svg'}
+```{r, echo=F, dpi=1000, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="Mapping two different variables from an external data frame"}
 var1<-PolygonMap(map=county_polygons,data=county_simulated,font_size=12,
            id="cnty", variable="var1", map_title="Simulated Variable 1", return_objects = T, include_titles = T)$map
 var2<-PolygonMap(map=county_polygons,data=county_simulated,font_size=12,
@@ -258,7 +258,7 @@ Research on the color choices that underpin readable maps and graphics has provi
 
 
 <!-- Color Palette Examples -->
-```{r, echo=F, dpi=1000, fig.height=2, fig.width=10, fig.align='center', message=F, warning=F,dev='svg'}
+```{r, echo=F, dpi=1000, fig.height=2, fig.width=10, fig.align='center', message=F, warning=F}
 seq<-PlotColors(wpal("cool_blue_jeans", 9), color_list_name="Example of Sequential palette",base_size = 12)+theme(axis.text = element_blank())
 div<-PlotColors(wpal("diverging_pink_black_blue", 9), color_list_name="Example of Diverging palette", base_size = 12)+theme(axis.text = element_blank())
 colors<-cowplot::plot_grid(seq,div, ncol=1, align="v")
@@ -267,7 +267,7 @@ colors
 
 The "ColorBrewer" project of Cynthia Brewer, available in R through the package **RColorBrewer**[19] contains a variety of color schemes used regularly within the mapping community. However, the sequential palettes presented in RColorBrewer often do not contain more than two or three colors, limiting the differentiation possible between data values. A member of the astronomy community, Dave Green, developed the "cubehelix" algorithm to differentiate star-brightness values from observations of the night sky. The "cubehelix" is a virtual corkscrew moving through a cube of red-green-blue color space on a trajectory from dark to light[20]. This function has been adapted for R in the **rje** package[21], where users can define the following variables in order to produce a variety of diferent color palettes moving from dark to light: (i) the number of rotations, (ii) how large the radius of the corkscrew is, and (iii) the saturation. The permutations for color palettes that can be created with this function is nearly endless. 
 
-```{r, echo=F, dpi=1000, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F,dev='svg'}
+```{r, echo=F, dpi=1000, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F}
 library(RColorBrewer)
 brew<-PlotColors(brewer.pal(9,"Spectral"), color_list_name="Color Brewer Spectral Palette",base_size = 12)+theme(axis.text = element_blank())
 cube<-PlotColors(wpal("ld_reg1", 9), color_list_name="A Cubehelix Color Palette",base_size = 12)+theme(axis.text = element_blank())
@@ -279,12 +279,12 @@ colors
 Within the **MapSuite** library, a series of curated sequential and diverging palettes derived from the cubehelix algorithm are contained within the wpal function. The **MapSuite**'s "Woodson Palettes" are lists of color values that can be called upon by both the main mapping functions and any other function that accepts a list of colors in R. Using the MapSuite's wpal function, users can specify a number of colors that will be interpolated, as well as whether black will be included (if it exists in the color palette). If you wish to explore or view a specific Woodson Palette's default colors, the ViewPal function will plot the desired color ramp. The PlotColors function allows the plotting of any list of colors, including a modified Woodson Palette.
 
 
-```{r, echo=T,dpi=1000, fig.height=1, fig.width=10, fig.align='center', message=F, warning=F,dev='svg'}
+```{r, echo=T,dpi=1000, fig.height=1, fig.width=10, fig.align='center', message=F, warning=F}
 ViewPal("seaglass",base_size = 12)
 ```
 
 To use a Woodson Palette in reverse (re-ordered dark-to-light), the function rev() can be used sort the color pallette in reverse order. 
-```{r, echo=T,  dpi=1000, fig.height=1, fig.width=10, fig.align='center', message=F, warning=F,dev='svg'}
+```{r, echo=T,  dpi=1000, fig.height=1, fig.width=10, fig.align='center', message=F, warning=F}
 more_colors<-rev(wpal("seaglass",n=12,noblack=T))
 PlotColors(more_colors, color_list_name="Reversed Ramp with More Colors",base_size = 12)
 ```
@@ -294,7 +294,7 @@ Our instinct to assign value judgments ("red is bad, blue is good") to color sca
 It is worth noting that the same color scale can look quite different based on the number of geometries or data points present-- while a color ramp that goes through many colors looks appropriate with large numbers of data points or geometries, too few can create a "chunky" or categorical look. In these circumstances, choosing a color palette with fewer colors may provide a more pleasing and readable map. To showcase the extent to which color and binning (converting a continuous variable to a categorical one) impact the visual appearance of data, the same data will be used in figures 9-12. 
 
 <!-- Examples of scary, non-scary palettes-->
-```{r, echo=F, dpi=1000, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="The same data, represented using three different color schemes",dev='svg'}
+```{r, echo=F, dpi=1000, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="The same data, represented using three different color schemes"}
 grid.newpage() # Starting a new page
 
 calm<-PolygonMap(map=colorado, id="cnty", data=county_simulated, variable="var3",legend_bar_length = unit(.5,"snpc"),legend_bar_width=unit(.02,"snpc"),legend_orientation = "vertical",
@@ -320,7 +320,7 @@ To explore these colors, and how they impact how data are portrayed, visit and e
 
 The default use of continuous color scales for numeric data is designed to minimize the visual bias that occurs from data classification into discrete groups, which can "reveal meaningful spatial trends or promote misleading interpretations" of the data[22]. Although different color schemes and ramps can emphasize or subdue patterns in the data, a continuous color scale that ranges through the minimum and maximum values is subject to one fewer source of bias-- the choice of what classification scheme to use.  Classifying or binning data has the danger of making values that are similar appear distant from one another due to proximity to the breaks values, and the size and divisions used to create data categories can dramatically change the visual appearance of the data.  
 
-```{r, echo=F, dpi=1000, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="Two different binning methods",dev='svg'}
+```{r, echo=F, dpi=1000, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="Two different binning methods"}
 quantile<-PolygonMap(map=colorado, 
                    id="cnty", 
                    data=colorado_data, 
@@ -354,7 +354,7 @@ print(pretty, vp = vplayout(1, 2))
 
 To define the minimum and maximum of the color scale separately from the minimum and maximum of the data variable you are mapping, a two-item vector (with a minimum and maximum) can be passed to the map_colors_limits parameter. For those who wish to highlight or emphasize some portion of the data without using binned categories, the parameter map_color_breaks allows users to change how the color ramp is applied to the range of the data. Note that this approach does not change the values, or the "truth" presented by the maps-- it simply changes how the colors are stretched across the minimum and maximum of the scale. However, these changes can dramatically change the _appearance_ of the data.
 
-```{r, echo=F, dpi=1000, fig.height=6, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="Changing how the colors are stretched across the data: (i) Evenly from the minimum to the maximum (top left), (ii) Artificially extending the range of the colors to 0-300, which is larger than the range of the data (top right), and (iii) Changing whether light or dark colors occupy more of the range of the data by shifting how the same colors are applied to the dataas in top left, or in a way where more dark or light colors cover the majority of the range (bottom)",dev='svg'}
+```{r, echo=F, dpi=1000, fig.height=6, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="Changing how the colors are stretched across the data: (i) Evenly from the minimum to the maximum (top left), (ii) Artificially extending the range of the colors to 0-300, which is larger than the range of the data (top right), and (iii) Changing whether light or dark colors occupy more of the range of the data by shifting how the same colors are applied to the dataas in top left, or in a way where more dark or light colors cover the majority of the range (bottom)"}
 default<-PolygonMap(map=colorado, 
                    id="cnty", 
                    data=county_simulated, 
@@ -413,7 +413,7 @@ print(breaks2, vp = vplayout(2, 2))
 
 If there is a meaningful central point or cutoff in your data, it is possible to set the numeric value that will serve as the central color in a diverging scale:
 
-```{r, echo=F, dpi=1000, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="Using two different numeric values (20 and 50) to center the color scheme on a meaingful value",dev='svg'}
+```{r, echo=F, dpi=1000, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="Using two different numeric values (20 and 50) to center the color scheme on a meaingful value"}
 diverge_1<-PolygonMap(map=colorado, id="cnty", data=county_simulated,
                    map_subtitle="map_diverging_centervalue = 20",
                    variable="simulated",
@@ -448,14 +448,14 @@ While a good map can highlight spatial patterns, a histogram of the data being r
 
 However, visually linking a histogram to a 2-dimensional spatial distribution can be difficult. To make the comparison of spatial distributions and densities, the function HistogramColorStats provides extra context by linking histogram color to choropleth color. In addition, references to properties of the distribution can be referenced in the form of colored lines that highlight data parameters. Users can pass a vector of statistical terms (currently supported are the mean, median, standard deviation, and any number of quantiles) to the function, which will provide even more visual cues to help understand the patterns in the data.
 
-```{r,dpi=1000, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F,dev='svg'}
+```{r,dpi=1000, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F}
 HistogramColorstats(datavector=county_simulated[["var2"]], color_ramp=wpal("seaglass"),
                     title="Simulated variable 2",dist_stats=c("mean",.25,.75))
 ```
 
 This functionality is integrated into the main mapping functions with the use of a 'histogram' parameter. When set to TRUE, the histogram will be placed at the bottom of the map, with the same limits and scaling as the map. To modify the histogram or its position, users can generate the histogram separately, using the function histogram_colorstats(), and modify the placements and formatting of the histogram as desired.
 
-```{r,dpi=1000, fig.height=4, fig.width=4, fig.align='center', message=F, warning=F, fig.cap="A map with a histogram of the data distribution",dev='svg'}
+```{r,dpi=1000, fig.height=4, fig.width=4, fig.align='center', message=F, warning=F, fig.cap="A map with a histogram of the data distribution"}
 RasterMap(coords=county_pixels[state_name=="Alaska"], id="cnty", xcol="x_albers", ycol="y_albers",
           data=county_simulated, variable="var3", map_colors=wpal("seaglass"),
           legend_position="left", legend_orientation="vertical", font_size=12,
@@ -470,14 +470,14 @@ Even vast quantities of data (often referred to as "big data") can often be pars
 
 Maintaining a consistent color classification scheme across these subgroups is a crucial part of comparing and contrasting the data. As Monmonier notes, "just as cut-points (data classification schemes) can be manipulated...pairs of choropleth maps can purposely heighten or suppress perceptions of bivariate association"[22]. **MapSuite**'s mapping functions make this easy. By defining a column in the external data set as the 'series dimension' of the data, or the dimension of the data (for example, time or age) that you wish to iterate over, the functions will produce a series of maps. These maps will have the same ranges by default (consistent colors applied to each subset of the data based on the minimum and maximum of the observed data across all dimensions). If desired, the ranges used to produce the color scheme can be generated for each subset, by setting the map_colors_limits parameter to "each_dimension". One can restrict the quantity of maps made (if you are only interested in certain sub-groups of the data represented in the external data frame), providing a 'series sequence' that will restrict the loop of maps made to only the specified levels. By default, a subtitle will be generated that is the specific level or dimension of the data that is being mapped. For example, if the variable as the series dimension is 'year', the subtitle for each map would change to represent the specific time period represented in the graphic. When a series dimension is provided, text entered into the 'subtitle' parameter will serve as the prefix for the automatically generated generated subtitle based on the levels of the data that are being mapped.
 
-```{r, eval=F,dev='svg'}
+```{r, eval=F}
 PolygonMap(map=colorado, id="cnty", data=county_simulated_time,
             variable="var3", series_dimension="year",series_sequence=c(2000,2005,2009),
             map_colors = wpal("berries"), legend_position = "right",
             legend_orientation= "vertical", map_subtitle="Year: ", map_title="Var 3")
 ```
 
-```{r, echo=F, dpi=1000, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="Three plots with standardized color schemes output from visualizing a time series. For the purposes of this illustration, these plots have been aligned horizontally, but would usually appear in separate plots.",dev='svg'}
+```{r, echo=F, dpi=1000, fig.height=3, fig.width=10, fig.align='center', message=F, warning=F, fig.cap="Three plots with standardized color schemes output from visualizing a time series. For the purposes of this illustration, these plots have been aligned horizontally, but would usually appear in separate plots."}
 results<-PolygonMap(map=colorado, id="cnty", data=county_simulated_time,
             variable="var3", series_dimension="year",series_sequence=c(2000,2005,2009),
             map_colors = wpal("berries"), legend_position = "right",legend_orientation = "vertical",
@@ -492,19 +492,19 @@ print(results$map[['2009']], vp = vplayout(1, 3))
 
 If the data contains more than one dimension (such as age, sex, and time), a series of loops can be structured such that the data is subset, and plots can be created. To quickly create a PDF of maps of the variable, designate a PDF path, and a .pdf of the maps will be generated rather than printing the plot results to the screen or other viewport.
 
-```{r,eval=F,dev='svg'}
+```{r,eval=F}
 for(a in ages){
   for(s in sexes){
     PolygonMap(map=county_polygons, id="cnty", data=county_simulated_time[age==a&sex==s],
                variable="var3", series_dimension="year",
                map_subtitle="Year: ", pdf_path = paste0("var3",a,s,".pdf"))
-  ,dev='svg'}
-,dev='svg'}
+  }
+}
 ```
  
 To generate a series of complex plots in which some or all of the variables change over time or another dimension, a loop can be constructed to generate plots based on each subset of the data, combined with other map elements, such as a constant background map.
 
-```{r,eval=F,message=F, warning=F,dev='svg'}
+```{r,eval=F,message=F, warning=F}
 background<-PolygonMap(map=county_polygons, id="cnty",return_objects = T)$map
 
 time_series<-PointMap(map=county_centroids, id="cnty", data=county_simulated, 
@@ -517,7 +517,7 @@ for(y in county_simulated$year){
 
   grid.newpage()
   print(map, vp = vplayout(1, 1)); print(legends, vp = vplayout(1, 2))
-,dev='svg'}
+}
 ```
 
 ## Summary and further work
@@ -571,6 +571,6 @@ A number of packages exist to visualize spatial data in R. The MapSuite package 
 
 
 ## Appendix 1: The Woodson Color Palettes
-```{r, echo=T, dpi=1000, fig.height=6, fig.width=10, fig.align='center', message=F, warning=F,dev='svg'}
+```{r, echo=T, dpi=1000, fig.height=6, fig.width=10, fig.align='center', message=F, warning=F}
 ViewPal(color=NULL, n=9, base_size = 12, listcolors=F, n_per_page=6, labelcolors=F)
 ```
