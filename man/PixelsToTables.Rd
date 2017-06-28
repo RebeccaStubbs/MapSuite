@@ -13,7 +13,7 @@ PixelsToTables(rast, dimensions = NULL, dim_name = NULL, var_name = NULL)
 for example, a list of years (seq(2000,2015)). Default value (if left null)
 will be the names of the raster layers.}
 
-\item{dim_name}{Only applicable/relevant if 'rast' is a RasterStack with multiple layers.
+\item{dim_name}{Only applicable/relevant if 'rast' is a RasterStack/Brick with multiple layers.
 A character string (no spaces, please) that you want to use
 to describe the dimensions in your raster (ex: "year"). This will
 exist in the "data" object returned by the function. Default value (if left null)
@@ -26,19 +26,19 @@ or in the "map" object if the rast is a RasterLayer. Default value (if left null
 is "variable".}
 }
 \value{
-This function will return a list with data tables: map, and data (only included if the rast object is a RasterStack). 
+This function will return a list with data tables: map, and data (only included if the rast object is a RasterStack/Brick). 
 The map object will be a data.table with columns for x, y, a point ID column named "id", and the raster values in a column
 named according to "var" (default if left null is "variable") with the raster values. 
 The data object will a data.table with columns for X, Y, point ID, the variable represented in the raster, and 
 a column with your dimension (named using the dim_name parameter), where the values in that dimension will be the dimensions 
 provided to the dim_name parameter. 
 
-Note that order of your dimensions provided to the function matters, if your rast object is a RasterStack -- 
+Note that order of your dimensions provided to the function matters, if your rast object is a RasterStack/Brick -- 
 if years are "stacked" earliest to lowest going from 1-16, you need to pass a sequence going from smallest to largest
 years to dimensions-- the values for "dimension" are assigned, in order, to the layers of the RasterStack.
 }
 \description{
-This function converts a RasterLayer or RasterStack to two objects returned in 
+This function converts a RasterLayer or RasterStack/Brick to two objects returned in 
 a list: a data.table that is the 'map', with x, y, and a point ID, and a data.table that contains
 the variable the raster contained, and the dimension (if it's a RasterStack).
 }
