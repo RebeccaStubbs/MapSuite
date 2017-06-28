@@ -1,7 +1,7 @@
 Package: MapSuite
 Type: Package
 Title: Woodson Mapping Suite
-Version: 0.1.2
+Version: 0.2.0
 Author: main: Rebecca Stubbs <stubbsrw@gmail.com>, contributor: Neal Marquez
     <nmarquez@uw.edu>
 Maintainer: Rebecca Stubbs <stubbsrw@gmail.com>
@@ -11,7 +11,7 @@ Description: Generates chloropleth maps out of polygons, points, and raster data
     custom color ramps for use in cartography. Contains functions for stacking/layering
     map objects of different types and combining their legends.
 Depends:
-    R (>= 3.2.2),
+    R (>= 3.1.2),
     data.table (>= 1.9.0),
     ggplot2,
     ggthemes,
