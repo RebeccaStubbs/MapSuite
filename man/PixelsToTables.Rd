@@ -40,7 +40,7 @@ years to dimensions-- the values for "dimension" are assigned, in order, to the 
 \description{
 This function converts a RasterLayer or RasterStack/Brick to two objects returned in 
 a list: a data.table that is the 'map', with x, y, and a point ID, and a data.table that contains
-the variable the raster contained, and the dimension (if it's a RasterStack).
+the variable the raster contained, and the dimension (if it's a RasterStack/Brick).
 }
 \examples{
 

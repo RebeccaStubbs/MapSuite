@@ -2,7 +2,7 @@
 #' 
 #' @description This function converts a RasterLayer or RasterStack/Brick to two objects returned in 
 #' a list: a data.table that is the 'map', with x, y, and a point ID, and a data.table that contains
-#' the variable the raster contained, and the dimension (if it's a RasterStack).
+#' the variable the raster contained, and the dimension (if it's a RasterStack/Brick).
 #' 
 #' @param rast       A RasterStack or RasterLayer object
 #' 
@@ -71,7 +71,7 @@ PixelsToTables<-function(rast, # Must be RasterStack or RasterLayer
   } else if ("RasterStack" %in% class(rast)|"RasterBrick" %in% class(rast)){
     results<-list()
     
-    message("'rast' seems to be a RasterStack: This will return 2 data.tables (map, and data) in a list, with those names.")
+    message("'rast' seems to be a RasterStack or RasterBrick: This will return 2 data.tables (map, and data) in a list, with those names.")
     # Checking for validity and definitions of dimensions: 
     if(is.null(dim_name)){
       warning("You haven't provided a dim_name, the layers in the raster stack will be represented by a variable 'dimension'")
@@ -83,7 +83,7 @@ PixelsToTables<-function(rast, # Must be RasterStack or RasterLayer
       ndims<-length(names(rast))
       if(length(dimensions)!=ndims){stop("Whoah, the number of layers in your raster doesn't seem to match up with the dimensions as specified...")}
     }else{
-      warning("You have not provided a list of dimensions-- this means that the function will use the names of the layers in the RasterStack.")
+      warning("You have not provided a list of dimensions-- this means that the function will use the names of the layers in the RasterStack/Brick.")
       dimensions<-names(rast)
     }
     
