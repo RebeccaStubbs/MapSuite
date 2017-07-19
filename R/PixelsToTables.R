@@ -64,7 +64,7 @@ PixelsToTables<-function(rast, # Must be RasterStack or RasterLayer
     
     map <- data.table(rasterToPoints(rast)) # Create a data.table based on that year
     map[,id:=seq(1:nrow(map))] # Generate a point ID
-    names(map)<-c("x","y",var,"id") # renaming columns
+    names(map)<-c("x","y",var_name,"id") # renaming columns
     return(map)  
     # Otherwise, if it is a RasterStack:
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
